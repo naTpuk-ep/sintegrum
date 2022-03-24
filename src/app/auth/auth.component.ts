@@ -9,25 +9,25 @@ import { AuthService, TAuthFormValue } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   authFormGroup!: FormGroup;
-  private fb = new FormBuilder();
+  private _fb = new FormBuilder();
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.initAuthFormGroup();
+    this._initAuthFormGroup();
   }
 
   authSubmit() {
-    if (this.authFormGroup.valid) {
-      this.authService.login(this.authFormValue);
-    }
+    // if (this.authFormGroup.valid) {
+      this.authService.login(this._authFormValue);
+    // }
   }
 
-  private get authFormValue() {
+  private get _authFormValue() {
     return this.authFormGroup.value as TAuthFormValue;
   }
 
-  private initAuthFormGroup() {
-    this.authFormGroup = this.fb.group({
+  private _initAuthFormGroup() {
+    this.authFormGroup = this._fb.group({
       login: ['', Validators.required],
       password: ['', Validators.required],
     });
