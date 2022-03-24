@@ -18,7 +18,7 @@ export class AuthComponent implements OnInit {
 
   authSubmit() {
     // if (this.authFormGroup.valid) {
-      this.authService.login(this._authFormValue);
+    this.authService.login(this._authFormValue);
     // }
   }
 

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import * as crypto from 'crypto-js';
+import * as jwtEncode from 'jwt-encode';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export type TAuthFormValue = {
   login: string;
@@ -16,28 +18,27 @@ export type TTokenPayload = {
 
 @Injectable()
 export class AuthService {
-  private _token!: string;
+  // token$$ = new Subject<string>();
   private _tokenPayload!: TTokenPayload;
-  private _tokenHeader = {
-    alg: 'HS256',
-    typ: 'JWT',
-  };
   private _secret = 'secret';
-  // private _tokenPayloadB64!: string;
   constructor() {}
+
   login(authValue: TAuthFormValue) {
-    this._tokenPayload = {
-      exp: 1,
-      name: 'name',
-    };
-    this._token = this._getToken();
+    const token$ = of(authValue).pipe(
+      map(({ login }) => {
+        this._tokenPayload = {
+          exp: Date.now(),
+          name: login,
+        };
+        return this._getToken();
+      })
+    );
+    // this.token$$.pipe(
+    //
+    // )
   }
   //
-  private _getToken() {
-    const header64 = btoa(JSON.stringify(this._tokenHeader)).split('=')[0];
-    const payload64 = btoa(JSON.stringify(this._tokenPayload)).split('=')[0];
-    const sha256 = crypto.HmacSHA256(`${header64}.${payload64}`, this._secret);
-    const sha256Base64 = crypto.enc.Base64.stringify(sha256).split('=')[0];
-    return `${header64}.${payload64}.${sha256Base64}`.replace(/\+/g, '-').replace(/\//g, '_');
+  private _getToken(): string {
+    return jwtEncode(this._tokenPayload, this._secret);
   }
 }
