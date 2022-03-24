@@ -1,13 +1,20 @@
 <div class="auth-card__container">
   <mat-card>
-    <mat-card-title>Authorization</mat-card-title>
-    <mat-form-field appearance="outline">
-      <mat-label>Login</mat-label>
-      <input matInput />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
-      <input matInput />
-    </mat-form-field>
+    <mat-card-content>
+      <h2>Log In</h2>
+      <form (ngSubmit)="authSubmit()" [formGroup]="authFormGroup">
+        <mat-form-field appearance="outline">
+          <mat-label>Login</mat-label>
+          <input formControlName="login" matInput />
+          <mat-error>Please enter login</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" matInput />
+          <mat-error>Please enter password</mat-error>
+        </mat-form-field>
+        <button type="submit" mat-flat-button color="primary">Submit</button>
+      </form>
+    </mat-card-content>
   </mat-card>
 </div>
