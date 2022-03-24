@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import * as jwtEncode from 'jwt-encode';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LocalStorageTokenService } from '../shared/local-storage-token.service';
 
 export type TAuthFormValue = {
-  login: string;
+  name: string;
   password: string;
 };
 
@@ -18,27 +19,21 @@ export type TTokenPayload = {
 
 @Injectable()
 export class AuthService {
-  // token$$ = new Subject<string>();
-  private _tokenPayload!: TTokenPayload;
+  token$!: Observable<string>;
   private _secret = 'secret';
-  constructor() {}
+  constructor(private _localStorageTokenService: LocalStorageTokenService) {}
 
-  login(authValue: TAuthFormValue) {
-    const token$ = of(authValue).pipe(
-      map(({ login }) => {
-        this._tokenPayload = {
-          exp: Date.now(),
-          name: login,
-        };
-        return this._getToken();
-      })
-    );
-    // this.token$$.pipe(
-    //
-    // )
+  loginSubscribe(authFormValue$: Observable<TAuthFormValue>) {
+    this.token$ = authFormValue$.pipe(map(this._getToken.bind(this)));
+    this.token$.subscribe((token) => {
+      console.log(token);
+    });
   }
-  //
-  private _getToken(): string {
-    return jwtEncode(this._tokenPayload, this._secret);
+  private _getToken({ name }: TAuthFormValue): string {
+    const payload: TTokenPayload = {
+      exp: Date.now(),
+      name,
+    };
+    return jwtEncode(payload, this._secret);
   }
 }

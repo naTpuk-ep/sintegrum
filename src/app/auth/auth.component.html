@@ -2,16 +2,16 @@
   <mat-card>
     <mat-card-content>
       <h2>Log In</h2>
-      <form (ngSubmit)="authSubmit()" [formGroup]="authFormGroup">
+      <form #authForm [formGroup]="authFormGroup">
         <mat-form-field appearance="outline">
           <mat-label>Login</mat-label>
-          <input formControlName="login" matInput />
-          <mat-error>Please enter login</mat-error>
+          <input formControlName="name" matInput minlength="5" />
+          <mat-error>{{ nameError }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input formControlName="password" matInput />
-          <mat-error>Please enter password</mat-error>
+          <input formControlName="password" matInput minlength="5" />
+          <mat-error>{{ passwordError }}</mat-error>
         </mat-form-field>
         <button type="submit" mat-flat-button color="primary">Submit</button>
       </form>
