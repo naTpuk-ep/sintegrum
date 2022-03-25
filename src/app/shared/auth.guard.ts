@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
     return false;
   }
 
-  _parsePayload(token: string): TTokenPayload {
+  _parsePayload(token: string) {
     const payload64 = token.split('.')[1];
     return JSON.parse(atob(payload64)) as TTokenPayload;
   }

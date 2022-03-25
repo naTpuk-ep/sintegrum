@@ -34,6 +34,7 @@ export class AuthService {
       this._router.navigate(['']);
     });
   }
+
   private _getToken({ name }: TAuthFormValue): string {
     const payload: TTokenPayload = {
       exp: Date.now(),

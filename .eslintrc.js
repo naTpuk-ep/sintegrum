@@ -92,6 +92,7 @@ module.exports = {
         'no-empty-function': 'off',
         'no-trailing-spaces': 'off',
         'import/extensions': 'off',
+        'camelcase': 'off',
         //   [
         //   'error',
         //   'ignorePackages',
