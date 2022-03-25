@@ -15,8 +15,7 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const token = this.localStorageTokenService.get();
     if (token) {
-      const parsedToken = JSON.parse(token);
-      const payload = this._parsePayload(parsedToken);
+      const payload = this._parsePayload(token);
       const expCondition = payload.exp + this._expTime > Date.now();
       if (!expCondition) {
         this._router.navigate(['auth']);

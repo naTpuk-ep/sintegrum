@@ -9,7 +9,9 @@ export class LocalStorageTokenService {
     localStorage.setItem(this._authKey, JSON.stringify(token));
   }
   get(): string | null {
-    return localStorage.getItem(this._authKey);
+    const tokenJson = localStorage.getItem(this._authKey);
+    if (!tokenJson) return null;
+    return JSON.parse(tokenJson);
   }
   remove() {
     localStorage.removeItem(this._authKey);

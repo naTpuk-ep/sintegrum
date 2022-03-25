@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SwapiHttpService } from '../shared/swapi-http.service';
 
 @Component({
   selector: 'app-main',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  constructor() {}
+  constructor(private _swapiHttpService: SwapiHttpService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._swapiHttpService.getFilms().subscribe((res) => {
+      console.log(res);
+    });
+  }
 }
