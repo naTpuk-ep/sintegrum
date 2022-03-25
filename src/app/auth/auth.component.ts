@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { fromEvent } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { fromEvent, of } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { AuthService, TAuthFormValue } from './auth.service';
 
 @Component({
@@ -33,8 +33,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   observeSubmit() {
     const submit$ = fromEvent(this.authForm.nativeElement, 'submit').pipe(
-      map(() => this._authFormValue),
-      filter(() => this.authFormGroup.valid)
+      filter(() => this.authFormGroup.valid),
+      map(() => this._authFormValue)
     );
     this._authService.loginSubscribe(submit$);
   }
