@@ -21,6 +21,7 @@ export type TTokenPayload = {
 @Injectable()
 export class AuthService {
   // token$!: Observable<string>;
+  userName!: string;
   private _secret = 'secret';
   constructor(
     private _localStorageTokenService: LocalStorageTokenService,
@@ -44,6 +45,7 @@ export class AuthService {
   }
 
   private _getToken({ name }: TAuthFormValue): string {
+    this.userName = name;
     const payload: TTokenPayload = {
       exp: Date.now(),
       name,

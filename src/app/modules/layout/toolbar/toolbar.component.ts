@@ -10,6 +10,7 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class ToolbarComponent implements AfterViewInit {
   @ViewChild('logOutBtn') logOutBtnRef!: MatButton;
+  userName = this._authService.userName;
   constructor(private _authService: AuthService) {}
 
   ngAfterViewInit() {
