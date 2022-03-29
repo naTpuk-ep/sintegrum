@@ -8,7 +8,7 @@ export type TFilmListItem = Readonly<{
   title: string;
   opening_crawl: string;
   producer: string;
-  release_date: Date;
+  release_date: string;
   url: string;
 }>;
 

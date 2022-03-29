@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { AuthService, TAuthFormValue } from './auth.service';
+import { AuthService, TAuthFormValue } from '../shared/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -36,7 +36,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
       filter(() => this.authFormGroup.valid),
       map(() => this._authFormValue)
     );
-    this._authService.loginSubscribe(submit$);
+    this._authService.login(submit$);
   }
 
   get nameError() {

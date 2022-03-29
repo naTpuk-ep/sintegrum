@@ -9,6 +9,7 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     canActivate: [AuthGuard],
+    // redirectTo: 'auth',
   },
   {
     path: 'auth',

@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { LocalStorageTokenService } from './local-storage-token.service';
-import { TTokenPayload } from '../auth/auth.service';
+import { TTokenPayload } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  private _expTime = 5000;
+  private _expTime = 900000;
   constructor(
-    private localStorageTokenService: LocalStorageTokenService,
+    private _localStorageTokenService: LocalStorageTokenService,
     private _router: Router
   ) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const token = this.localStorageTokenService.get();
+    const token = this._localStorageTokenService.get();
     if (token) {
       const payload = this._parsePayload(token);
       const expCondition = payload.exp + this._expTime > Date.now();

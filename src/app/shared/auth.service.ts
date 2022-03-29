@@ -3,7 +3,7 @@ import * as jwtEncode from 'jwt-encode';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LocalStorageTokenService } from '../shared/local-storage-token.service';
+import { LocalStorageTokenService } from './local-storage-token.service';
 
 export type TAuthFormValue = {
   name: string;
@@ -18,18 +18,20 @@ export type TTokenPayload = {
   permissions?: TUserPermissions[];
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
-  private _token$!: Observable<string>;
+  token$!: Observable<string>;
   private _secret = 'secret';
   constructor(
     private _localStorageTokenService: LocalStorageTokenService,
     private _router: Router
   ) {}
 
-  loginSubscribe(authFormValue$: Observable<TAuthFormValue>) {
-    this._token$ = authFormValue$.pipe(switchMap((formValue) => of(this._getToken(formValue))));
-    this._token$.subscribe((token) => {
+  login(authFormValue$: Observable<TAuthFormValue>) {
+    this.token$ = authFormValue$.pipe(switchMap((formValue) => of(this._getToken(formValue))));
+    this.token$.subscribe((token) => {
       this._localStorageTokenService.set(token);
       this._router.navigate(['']);
     });

@@ -9,9 +9,5 @@ import { SwapiHttpService } from '../shared/swapi-http.service';
 export class MainComponent implements OnInit {
   constructor(private _swapiHttpService: SwapiHttpService) {}
 
-  ngOnInit(): void {
-    this._swapiHttpService.getFilms().subscribe((res) => {
-      console.log(res);
-    });
-  }
+  ngOnInit(): void {}
 }
