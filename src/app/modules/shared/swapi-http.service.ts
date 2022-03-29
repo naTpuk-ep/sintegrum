@@ -12,17 +12,17 @@ export type TFilmListItem = Readonly<{
   url: string;
 }>;
 
-export type TSwapiResponse<T> = {
-  results: T;
+export type TGetFilmsResponse = {
+  results: TFilmListItem[];
 };
 
 @Injectable()
 export class SwapiHttpService {
-  private _baseUrl = 'https://swapi.dev/api/';
+  private _baseUrl = 'https://swapi.dev/api';
   constructor(private _http: HttpClient) {}
 
   getFilms(): Observable<TFilmListItem[]> {
-    return this._get<TSwapiResponse<TFilmListItem[]>>('films').pipe(
+    return this._get<TGetFilmsResponse>(`${this._baseUrl}/films`).pipe(
       map((response) =>
         response.results.map(
           ({ url, opening_crawl, release_date, producer, title, episode_id }) => ({
@@ -39,6 +39,6 @@ export class SwapiHttpService {
   }
 
   private _get<T>(url: string) {
-    return this._http.get(this._baseUrl + url) as Observable<T>;
+    return this._http.get(url) as Observable<T>;
   }
 }

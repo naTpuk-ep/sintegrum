@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
-import { FilmListComponent } from '../content/film-list/film-list.component';
 
 const routes: Routes = [
   {
@@ -9,13 +8,8 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'list',
-      },
-      {
-        path: 'list',
-        component: FilmListComponent,
+        path: 'films',
+        loadChildren: () => import('../films/films.module').then((m) => m.FilmsModule),
       },
     ],
   },
