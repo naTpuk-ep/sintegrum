@@ -28,10 +28,10 @@ export class AuthComponent implements OnInit, AfterViewInit {
     this._initAuthFormGroup();
   }
   ngAfterViewInit() {
-    this.observeSubmit();
+    this._observeSubmit();
   }
 
-  observeSubmit() {
+  private _observeSubmit() {
     const submit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
       filter(() => this.authFormGroup.valid),
       map(() => this._authFormValue)

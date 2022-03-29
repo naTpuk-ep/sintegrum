@@ -20,7 +20,7 @@ export type TTokenPayload = {
 
 @Injectable()
 export class AuthService {
-  token$!: Observable<string>;
+  // token$!: Observable<string>;
   private _secret = 'secret';
   constructor(
     private _localStorageTokenService: LocalStorageTokenService,
@@ -28,15 +28,19 @@ export class AuthService {
   ) {}
 
   login(authFormValue$: Observable<TAuthFormValue>) {
-    this.token$ = authFormValue$.pipe(switchMap((formValue) => of(this._getToken(formValue))));
-    this.token$.subscribe((token) => {
-      this._localStorageTokenService.set(token);
-      this._router.navigate(['']);
-    });
+    authFormValue$
+      .pipe(switchMap((formValue) => of(this._getToken(formValue))))
+      .subscribe((token) => {
+        this._localStorageTokenService.set(token);
+        this._router.navigate(['']);
+      });
   }
 
-  logout() {
-  
+  logout(logout$: Observable<any>) {
+    logout$.subscribe(() => {
+      this._localStorageTokenService.remove();
+      this._router.navigate(['auth']);
+    });
   }
 
   private _getToken({ name }: TAuthFormValue): string {
