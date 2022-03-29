@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './main/main.component';
-import { AuthGuard } from './shared/auth.guard';
-import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './modules/shared/auth.guard';
+import { AuthComponent } from './modules/auth/auth.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: MainComponent,
-    canActivate: [AuthGuard],
-    // redirectTo: 'auth',
-  },
-  {
     path: 'auth',
     component: AuthComponent,
+  },
+  {
+    path: 'films',
+    loadChildren: () => import('./modules/layout/layout.module').then((m) => m.LayoutModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'films/list',
   },
 ];
 

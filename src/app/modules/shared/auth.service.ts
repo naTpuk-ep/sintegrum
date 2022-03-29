@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as jwtEncode from 'jwt-encode';
-import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LocalStorageTokenService } from './local-storage-token.service';
 
@@ -18,9 +18,7 @@ export type TTokenPayload = {
   permissions?: TUserPermissions[];
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthService {
   token$!: Observable<string>;
   private _secret = 'secret';
@@ -35,6 +33,10 @@ export class AuthService {
       this._localStorageTokenService.set(token);
       this._router.navigate(['']);
     });
+  }
+
+  logout() {
+  
   }
 
   private _getToken({ name }: TAuthFormValue): string {

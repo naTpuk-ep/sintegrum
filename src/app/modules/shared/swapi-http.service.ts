@@ -16,9 +16,7 @@ export type TSwapiResponse<T> = {
   results: T;
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SwapiHttpService {
   private _baseUrl = 'https://swapi.dev/api/';
   constructor(private _http: HttpClient) {}

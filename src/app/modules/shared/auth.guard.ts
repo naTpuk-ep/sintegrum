@@ -3,9 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { LocalStorageTokenService } from './local-storage-token.service';
 import { TTokenPayload } from './auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthGuard implements CanActivate {
   private _expTime = 900000;
   constructor(
@@ -26,7 +24,7 @@ export class AuthGuard implements CanActivate {
     return false;
   }
 
-  _parsePayload(token: string) {
+  private _parsePayload(token: string) {
     const payload64 = token.split('.')[1];
     return JSON.parse(atob(payload64)) as TTokenPayload;
   }

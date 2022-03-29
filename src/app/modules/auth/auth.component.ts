@@ -18,7 +18,7 @@ import { AuthService, TAuthFormValue } from '../shared/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthComponent implements OnInit, AfterViewInit {
-  @ViewChild('authForm') authForm!: ElementRef<HTMLFormElement>;
+  @ViewChild('authForm') authFormRef!: ElementRef<HTMLFormElement>;
   authFormGroup!: FormGroup;
   private _fb = new FormBuilder();
 
@@ -32,7 +32,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   }
 
   observeSubmit() {
-    const submit$ = fromEvent(this.authForm.nativeElement, 'submit').pipe(
+    const submit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
       filter(() => this.authFormGroup.valid),
       map(() => this._authFormValue)
     );
