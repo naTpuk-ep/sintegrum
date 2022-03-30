@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, CanLoad, Router } from '@angular/router';
 import { LocalStorageTokenService } from './local-storage-token.service';
 import { AuthService } from './auth.service';
 import { JwtCodecService } from './jwt-codec.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanLoad {
   private _expTime = 3200000;
   constructor(
     private _localStorageTokenService: LocalStorageTokenService,
@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     private _jwtCodecService: JwtCodecService,
     private _router: Router
   ) {}
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canLoad(): boolean {
     const token = this._localStorageTokenService.get();
     if (token) {
       const payload = this._jwtCodecService.parsePayload(token);

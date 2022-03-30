@@ -31,7 +31,7 @@ export class AuthService {
     this.payload = payload;
   }
 
-  login(authFormValue$: Observable<TAuthFormValue>) {
+  loginSubscribe(authFormValue$: Observable<TAuthFormValue>) {
     authFormValue$
       .pipe(
         switchMap((formValue) => {
@@ -46,11 +46,12 @@ export class AuthService {
       });
   }
 
-  logout(logout$: Observable<any>) {
-    logout$.subscribe(() => {
-      this._localStorageTokenService.remove();
-      this._router.navigate(['auth']);
-    });
+  logout() {
+    this._router.navigate(['auth']);
+  }
+
+  resetLoginStatus() {
+    this._localStorageTokenService.remove();
   }
 
   private _createPayload({ name }: TAuthFormValue): TTokenPayload {

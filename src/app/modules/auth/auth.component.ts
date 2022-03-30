@@ -25,18 +25,19 @@ export class AuthComponent implements OnInit, AfterViewInit {
   constructor(private _authService: AuthService) {}
 
   ngOnInit(): void {
+    this._authService.resetLoginStatus();
     this._initAuthFormGroup();
   }
   ngAfterViewInit() {
-    this._observeSubmit();
+    this._observeLoginSubmit();
   }
 
-  private _observeSubmit() {
-    const submit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
+  private _observeLoginSubmit() {
+    const loginSubmit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
       filter(() => this.authFormGroup.valid),
       map(() => this._authFormValue)
     );
-    this._authService.login(submit$);
+    this._authService.loginSubscribe(loginSubmit$);
   }
 
   get nameError() {

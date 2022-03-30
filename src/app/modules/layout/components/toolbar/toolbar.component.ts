@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -19,7 +18,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 export class ToolbarComponent implements OnInit, AfterViewInit {
   @ViewChild('logOutBtn') logOutBtnRef!: MatButton;
   userName!: string;
-  constructor(private _authService: AuthService, private cdRef: ChangeDetectorRef) {}
+  constructor(private _authService: AuthService) {}
 
   ngOnInit() {
     this.userName = this._authService.payload.name;
@@ -30,7 +29,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
   }
 
   private _observeLogout() {
-    const logout$ = fromEvent(this.logOutBtnRef._getHostElement(), 'click');
-    this._authService.logout(logout$);
+    fromEvent(this.logOutBtnRef._getHostElement(), 'click').subscribe(() => {
+      this._authService.logout();
+    });
   }
 }

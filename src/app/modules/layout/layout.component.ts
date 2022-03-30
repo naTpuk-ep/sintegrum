@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SpinnerService } from './services/spinner.service';
 
 @Component({
@@ -8,8 +7,6 @@ import { SpinnerService } from './services/spinner.service';
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent implements OnInit {
-  constructor(public spinnerService: SpinnerService, private _router: Router) {}
-
-  ngOnInit(): void {}
+export class LayoutComponent {
+  constructor(public spinnerService: SpinnerService) {}
 }

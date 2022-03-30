@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SpinnerService } from './spinner.service';
 
-export abstract class SwapiHttpService {
+export class SwapiHttpService {
   protected _baseUrl = 'https://swapi.dev/api';
   protected constructor(
     protected _httpClient: HttpClient,
