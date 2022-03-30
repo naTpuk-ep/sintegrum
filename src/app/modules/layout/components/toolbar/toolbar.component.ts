@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { fromEvent } from 'rxjs';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService } from '../../../shared/sevices/auth.service';
 
 @Component({
   selector: 'app-toolbar',

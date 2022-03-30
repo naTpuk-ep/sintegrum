@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SwapiHttpService } from '../shared/swapi-http.service';
+import { SwapiHttpService } from './services/swapi-http.service';
 
 @Component({
   selector: 'app-layout',

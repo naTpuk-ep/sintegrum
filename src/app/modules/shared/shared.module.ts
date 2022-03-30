@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthService } from './auth.service';
-import { JwtInterceptor } from './jwt.interceptor';
-import { AuthGuard } from './auth.guard';
-import { LocalStorageTokenService } from './local-storage-token.service';
-import { SwapiHttpService } from './swapi-http.service';
-import { JwtCodecService } from './jwt-codec.service';
+import { AuthService } from './sevices/auth.service';
+import { JwtInterceptor } from './sevices/jwt.interceptor';
+import { AuthGuard } from './sevices/auth.guard';
+import { LocalStorageTokenService } from './sevices/local-storage-token.service';
+import { SwapiHttpService } from '../layout/services/swapi-http.service';
+import { JwtCodecService } from './sevices/jwt-codec.service';
 
 @NgModule({
   imports: [HttpClientModule],
@@ -13,7 +13,6 @@ import { JwtCodecService } from './jwt-codec.service';
     AuthGuard,
     AuthService,
     LocalStorageTokenService,
-    SwapiHttpService,
     JwtCodecService,
     {
       provide: HTTP_INTERCEPTORS,
