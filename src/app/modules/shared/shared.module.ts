@@ -5,6 +5,7 @@ import { JwtInterceptor } from './jwt.interceptor';
 import { AuthGuard } from './auth.guard';
 import { LocalStorageTokenService } from './local-storage-token.service';
 import { SwapiHttpService } from './swapi-http.service';
+import { JwtCodecService } from './jwt-codec.service';
 
 @NgModule({
   imports: [HttpClientModule],
@@ -13,6 +14,7 @@ import { SwapiHttpService } from './swapi-http.service';
     AuthService,
     LocalStorageTokenService,
     SwapiHttpService,
+    JwtCodecService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

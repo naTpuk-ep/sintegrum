@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import * as jwtEncode from 'jwt-encode';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LocalStorageTokenService } from './local-storage-token.service';
+import { JwtCodecService } from './jwt-codec.service';
 
 export type TAuthFormValue = {
   name: string;
@@ -20,17 +20,26 @@ export type TTokenPayload = {
 
 @Injectable()
 export class AuthService {
-  // token$!: Observable<string>;
-  userName!: string;
-  private _secret = 'secret';
+  payload!: TTokenPayload;
   constructor(
     private _localStorageTokenService: LocalStorageTokenService,
+    private _jwtCodecService: JwtCodecService,
     private _router: Router
   ) {}
 
+  setPayload(payload: TTokenPayload) {
+    this.payload = payload;
+  }
+
   login(authFormValue$: Observable<TAuthFormValue>) {
     authFormValue$
-      .pipe(switchMap((formValue) => of(this._getToken(formValue))))
+      .pipe(
+        switchMap((formValue) => {
+          const payload = this._createPayload(formValue);
+          const token = this._jwtCodecService.encode(payload);
+          return of(token);
+        })
+      )
       .subscribe((token) => {
         this._localStorageTokenService.set(token);
         this._router.navigate(['']);
@@ -44,12 +53,10 @@ export class AuthService {
     });
   }
 
-  private _getToken({ name }: TAuthFormValue): string {
-    this.userName = name;
-    const payload: TTokenPayload = {
+  private _createPayload({ name }: TAuthFormValue): TTokenPayload {
+    return {
       exp: Date.now(),
       name,
     };
-    return jwtEncode(payload, this._secret);
   }
 }
