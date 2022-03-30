@@ -6,7 +6,7 @@ import { JwtCodecService } from './jwt-codec.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private _expTime = 900000;
+  private _expTime = 3200000;
   constructor(
     private _localStorageTokenService: LocalStorageTokenService,
     private _authService: AuthService,

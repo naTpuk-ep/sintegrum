@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SwapiHttpService } from './services/swapi-http.service';
+import { SpinnerService } from './services/spinner.service';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent implements OnInit {
-  constructor(private _swapiHttpService: SwapiHttpService, private _router: Router) {
-    // this._router.navigate(['films/list']);
-  }
+  constructor(public spinnerService: SpinnerService, private _router: Router) {}
 
   ngOnInit(): void {}
 }

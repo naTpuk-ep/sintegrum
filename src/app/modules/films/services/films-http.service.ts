@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { SwapiHttpService } from '../../layout/services/swapi-http.service';
+import { SpinnerService } from '../../layout/services/spinner.service';
 
 export type TFilmListItem = Readonly<{
   episode_id: number;
@@ -19,8 +20,8 @@ export type TGetFilmsResponse = {
 
 @Injectable()
 export class FilmsHttpService extends SwapiHttpService {
-  constructor(protected _httpClient: HttpClient) {
-    super(_httpClient);
+  constructor(protected _httpClient: HttpClient, protected _spinnerService: SpinnerService) {
+    super(_httpClient, _spinnerService);
   }
   getFilmList(): Observable<TFilmListItem[]> {
     return this._get<TGetFilmsResponse>(`${this._baseUrl}/films`).pipe(

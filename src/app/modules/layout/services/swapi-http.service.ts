@@ -1,18 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { SpinnerService } from './spinner.service';
 
-@Injectable()
-export class SwapiHttpService {
-  loading$$ = new BehaviorSubject<boolean>(false);
+export abstract class SwapiHttpService {
   protected _baseUrl = 'https://swapi.dev/api';
-  constructor(protected _httpClient: HttpClient) {}
-  protected _get<T>(url: string) {
-    this.loading$$.next(true);
-    const httpGet$ = this._httpClient.get(url) as Observable<T>;
-    httpGet$.subscribe(() => {
-      this.loading$$.next(false);
-    });
-    return httpGet$;
+  protected constructor(
+    protected _httpClient: HttpClient,
+    protected _spinnerService: SpinnerService
+  ) {}
+  protected _get<T extends object>(url: string) {
+    this._spinnerService.status$$.next(true);
+    const httpGet$ = this._httpClient.get(url).pipe(
+      tap(() => {
+        this._spinnerService.status$$.next(false);
+      })
+    );
+    return httpGet$ as Observable<T>;
   }
 }

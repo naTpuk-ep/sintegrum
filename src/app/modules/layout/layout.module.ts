@@ -4,10 +4,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutComponent } from './layout.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { LayoutRoutingModule } from './layout-routing.module';
-import { SwapiHttpService } from './services/swapi-http.service';
+import { SpinnerService } from './services/spinner.service';
 
 @NgModule({
   declarations: [LayoutComponent, ToolbarComponent],
@@ -18,7 +20,9 @@ import { SwapiHttpService } from './services/swapi-http.service';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
   ],
-  providers: [SwapiHttpService],
+  providers: [SpinnerService],
 })
 export class LayoutModule {}
