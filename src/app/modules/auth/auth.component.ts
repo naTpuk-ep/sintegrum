@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fromEvent, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { AuthService, TAuthFormValue } from '../shared/sevices/auth.service';
+import { AuthService, TAuthFormValue } from './services/auth.service';
 
 @Component({
   selector: 'app-auth',
