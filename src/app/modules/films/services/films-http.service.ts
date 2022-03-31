@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SwapiHttpService } from '../../layout/services/swapi-http.service';
 import { SpinnerService } from '../../layout/services/spinner.service';
+import { HttpErrorHandlerService } from '../../layout/services/http-error-handler.service';
 
 export interface IFilmListItem {
   episode_id: number;
@@ -24,8 +25,12 @@ export interface IGetFilmsResponse {
 
 @Injectable()
 export class FilmsHttpService extends SwapiHttpService {
-  constructor(protected _httpClient: HttpClient, protected _spinnerService: SpinnerService) {
-    super(_httpClient, _spinnerService);
+  constructor(
+    protected _httpClient: HttpClient,
+    protected _spinnerService: SpinnerService,
+    protected _httpErrorHandlerService: HttpErrorHandlerService
+  ) {
+    super(_httpClient, _spinnerService, _httpErrorHandlerService);
   }
   getFilmList(): Observable<Readonly<IFilmListItem[]>> {
     const mapResult = ({

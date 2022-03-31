@@ -1,0 +1,16 @@
+.font-color {
+  color: rgba(0, 0, 0, 0.69);
+}
+
+@mixin icon-size($size) {
+  font-size: $size+px;
+  height: $size+px;
+  width: $size+px;
+}
+$sizes: 50;
+
+@each $size in $sizes {
+  .mat-icon.icon-size__#{$size} {
+    @include icon-size($size);
+  }
+}

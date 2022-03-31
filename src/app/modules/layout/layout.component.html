@@ -4,5 +4,6 @@
   <div class="content-container">
     <router-outlet></router-outlet>
     <app-spinner *ngIf="spinnerService.status$$ | async"></app-spinner>
+    <app-http-error *ngIf="httpErrorHandlerService.error$$ | async"></app-http-error>
   </div>
 </mat-drawer-container>

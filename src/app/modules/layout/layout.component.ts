@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SpinnerService } from './services/spinner.service';
+import { HttpErrorHandlerService } from './services/http-error-handler.service';
 
 @Component({
   selector: 'app-layout',
@@ -8,5 +9,8 @@ import { SpinnerService } from './services/spinner.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
-  constructor(public spinnerService: SpinnerService) {}
+  constructor(
+    public spinnerService: SpinnerService,
+    public httpErrorHandlerService: HttpErrorHandlerService
+  ) {}
 }

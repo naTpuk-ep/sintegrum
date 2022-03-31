@@ -13,9 +13,11 @@ import { LayoutComponent } from './layout.component';
 import { HttpErrorHandlerService } from './services/http-error-handler.service';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { JwtInterceptor } from '../auth/services/jwt.interceptor';
+import { HttpErrorComponent } from './components/http-error/http-error.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [LayoutComponent, ToolbarComponent, SpinnerComponent],
+  declarations: [LayoutComponent, ToolbarComponent, SpinnerComponent, HttpErrorComponent],
   imports: [
     CommonModule,
     LayoutRoutingModule,
@@ -25,6 +27,7 @@ import { JwtInterceptor } from '../auth/services/jwt.interceptor';
     MatIconModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    MatDialogModule,
   ],
   providers: [
     {
