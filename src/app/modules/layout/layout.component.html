@@ -1,14 +1,8 @@
 <app-toolbar></app-toolbar>
 <mat-drawer-container class="app-container">
   <mat-drawer mode="side" class="side-nav-container" opened>Menu</mat-drawer>
-  <mat-drawer-content class="content-container">
-    <div *ngIf="spinnerService.status$$ | async" class="spinner-container">
-      <mat-progress-spinner
-        [diameter]="70"
-        color="primary"
-        mode="indeterminate"
-      ></mat-progress-spinner>
-    </div>
+  <div class="content-container">
     <router-outlet></router-outlet>
-  </mat-drawer-content>
+    <app-spinner *ngIf="spinnerService.status$$ | async"></app-spinner>
+  </div>
 </mat-drawer-container>

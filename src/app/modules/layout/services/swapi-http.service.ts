@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { SpinnerService } from './spinner.service';
 
 export class SwapiHttpService {
@@ -9,13 +9,15 @@ export class SwapiHttpService {
     protected _httpClient: HttpClient,
     protected _spinnerService: SpinnerService
   ) {}
-  protected _get<T extends object>(url: string) {
-    this._spinnerService.status$$.next(true);
-    const httpGet$ = this._httpClient.get(url).pipe(
-      tap(() => {
-        this._spinnerService.status$$.next(false);
+  protected _get<T>(url: string, spinner = true) {
+    this._spinnerService.status$$.next(spinner);
+    return this._httpClient.get<T>(url).pipe(
+      catchError(() => EMPTY),
+      tap({
+        complete: () => {
+          this._spinnerService.status$$.next(false);
+        },
       })
     );
-    return httpGet$ as Observable<T>;
   }
 }

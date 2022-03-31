@@ -24,16 +24,6 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     MatButtonModule,
   ],
   exports: [AuthComponent],
-  providers: [
-    AuthGuard,
-    AuthService,
-    LocalStorageTokenService,
-    JwtCodecService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [AuthGuard, AuthService, LocalStorageTokenService, JwtCodecService],
 })
 export class AuthModule {}

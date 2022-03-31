@@ -1,1 +1,3 @@
-<p>film-list works!</p>
+<div *ngFor="let filmListItem of filmsList$ | async">
+  {{ filmListItem | json }}
+</div>
