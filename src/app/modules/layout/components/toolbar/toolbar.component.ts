@@ -18,19 +18,19 @@ import { AuthService } from '../../../auth/services/auth.service';
 export class ToolbarComponent implements OnInit, AfterViewInit {
   @ViewChild('logOutBtn') logOutBtnRef!: MatButton;
   userName!: string;
-  constructor(private _authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.userName = this._authService.payload.name;
+    this.userName = this.authService.payload.name;
   }
 
   ngAfterViewInit() {
-    this._observeLogout();
+    this.observeLogout();
   }
 
-  private _observeLogout() {
+  private observeLogout() {
     fromEvent(this.logOutBtnRef._getHostElement(), 'click').subscribe(() => {
-      this._authService.logout();
+      this.authService.logout();
     });
   }
 }

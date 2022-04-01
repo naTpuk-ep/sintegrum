@@ -6,26 +6,26 @@ import { JwtCodecService } from './jwt-codec.service';
 
 @Injectable()
 export class AuthGuard implements CanLoad {
-  private _expTime = 3200000;
+  private expTime = 3200000;
   constructor(
-    private _localStorageTokenService: LocalStorageTokenService,
-    private _authService: AuthService,
-    private _jwtCodecService: JwtCodecService,
-    private _router: Router
+    private localStorageTokenService: LocalStorageTokenService,
+    private authService: AuthService,
+    private jwtCodecService: JwtCodecService,
+    private router: Router
   ) {}
   canLoad(): boolean {
-    const token = this._localStorageTokenService.get();
+    const token = this.localStorageTokenService.get();
     if (token) {
-      const payload = this._jwtCodecService.parsePayload(token);
-      if (this._isExpTimeCorrect(payload.exp)) {
-        this._authService.setPayload(payload);
+      const payload = this.jwtCodecService.parsePayload(token);
+      if (this.isExpTimeCorrect(payload.exp)) {
+        this.authService.setPayload(payload);
         return true;
       }
     }
-    this._router.navigate(['auth']);
+    this.router.navigate(['auth']);
     return false;
   }
-  private _isExpTimeCorrect(time: number) {
-    return time + this._expTime > Date.now();
+  private isExpTimeCorrect(time: number) {
+    return time + this.expTime > Date.now();
   }
 }

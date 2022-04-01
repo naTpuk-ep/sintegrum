@@ -4,9 +4,9 @@ import { TTokenPayload } from './auth.service';
 
 @Injectable()
 export class JwtCodecService {
-  private _secret = 'secret';
+  private secret = 'secret';
   encode(payload: TTokenPayload): string {
-    return jwtEncode(payload, this._secret);
+    return jwtEncode(payload, this.secret);
   }
   parsePayload(token: string) {
     const payload64 = token.split('.')[1];

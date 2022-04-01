@@ -20,24 +20,24 @@ import { AuthService, TAuthFormValue } from './services/auth.service';
 export class AuthComponent implements OnInit, AfterViewInit {
   @ViewChild('authForm') authFormRef!: ElementRef<HTMLFormElement>;
   authFormGroup!: FormGroup;
-  private _fb = new FormBuilder();
+  private fb = new FormBuilder();
 
-  constructor(private _authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this._authService.resetLoginStatus();
-    this._initAuthFormGroup();
+    this.authService.resetLoginStatus();
+    this.initAuthFormGroup();
   }
   ngAfterViewInit() {
-    this._observeLoginSubmit();
+    this.observeLoginSubmit();
   }
 
-  private _observeLoginSubmit() {
+  private observeLoginSubmit() {
     const loginSubmit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
       filter(() => this.authFormGroup.valid),
-      map(() => this._authFormValue)
+      map(() => this.authFormValue)
     );
-    this._authService.loginSubscribe(loginSubmit$);
+    this.authService.loginSubscribe(loginSubmit$);
   }
 
   get nameError() {
@@ -56,12 +56,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
       : '';
   }
 
-  private get _authFormValue() {
+  private get authFormValue() {
     return this.authFormGroup.value as TAuthFormValue;
   }
 
-  private _initAuthFormGroup() {
-    this.authFormGroup = this._fb.group({
+  private initAuthFormGroup() {
+    this.authFormGroup = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });

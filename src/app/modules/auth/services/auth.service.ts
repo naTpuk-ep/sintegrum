@@ -22,9 +22,9 @@ export type TTokenPayload = {
 export class AuthService {
   payload!: TTokenPayload;
   constructor(
-    private _localStorageTokenService: LocalStorageTokenService,
-    private _jwtCodecService: JwtCodecService,
-    private _router: Router
+    private localStorageTokenService: LocalStorageTokenService,
+    private jwtCodecService: JwtCodecService,
+    private router: Router
   ) {}
 
   setPayload(payload: TTokenPayload) {
@@ -35,26 +35,26 @@ export class AuthService {
     authFormValue$
       .pipe(
         switchMap((formValue) => {
-          const payload = this._createPayload(formValue);
-          const token = this._jwtCodecService.encode(payload);
+          const payload = this.createPayload(formValue);
+          const token = this.jwtCodecService.encode(payload);
           return of(token);
         })
       )
       .subscribe((token) => {
-        this._localStorageTokenService.set(token);
-        this._router.navigate(['']);
+        this.localStorageTokenService.set(token);
+        this.router.navigate(['']);
       });
   }
 
   logout() {
-    this._router.navigate(['auth']);
+    this.router.navigate(['auth']);
   }
 
   resetLoginStatus() {
-    this._localStorageTokenService.remove();
+    this.localStorageTokenService.remove();
   }
 
-  private _createPayload({ name }: TAuthFormValue): TTokenPayload {
+  private createPayload({ name }: TAuthFormValue): TTokenPayload {
     return {
       exp: Date.now(),
       name,

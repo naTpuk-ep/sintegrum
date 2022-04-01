@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SpinnerService } from './spinner.service';
 import { HttpErrorHandlerService } from './http-error-handler.service';
