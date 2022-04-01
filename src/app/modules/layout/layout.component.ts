@@ -9,8 +9,13 @@ import { HttpErrorHandlerService } from './services/http-error-handler.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
+  error!: Error | null;
   constructor(
     public spinnerService: SpinnerService,
     public httpErrorHandlerService: HttpErrorHandlerService
-  ) {}
+  ) {
+    this.httpErrorHandlerService.error$$.subscribe((error) => {
+      this.error = error;
+    });
+  }
 }

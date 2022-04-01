@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LocalStorageTokenService } from './local-storage-token.service';
 import { JwtCodecService } from './jwt-codec.service';

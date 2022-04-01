@@ -26,11 +26,11 @@ export interface IGetFilmsResponse {
 @Injectable()
 export class FilmsHttpService extends SwapiHttpService {
   constructor(
-    protected _httpClient: HttpClient,
-    protected _spinnerService: SpinnerService,
-    protected _httpErrorHandlerService: HttpErrorHandlerService
+    protected httpClient: HttpClient,
+    protected spinnerService: SpinnerService,
+    protected httpErrorHandlerService: HttpErrorHandlerService
   ) {
-    super(_httpClient, _spinnerService, _httpErrorHandlerService);
+    super(httpClient, spinnerService, httpErrorHandlerService);
   }
   getFilmList(): Observable<Readonly<IFilmListItem[]>> {
     const mapResult = ({
@@ -49,7 +49,7 @@ export class FilmsHttpService extends SwapiHttpService {
       episode_id,
     });
 
-    return this._get<IGetFilmsResponse>(`${this._baseUrl}/films`).pipe(
+    return this._get<IGetFilmsResponse>(`${this.baseUrl}/films`).pipe(
       map((response: IGetFilmsResponse) => response.results.map(mapResult))
     );
   }

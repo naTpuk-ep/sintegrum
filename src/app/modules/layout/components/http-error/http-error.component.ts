@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HttpErrorHandlerService } from '../../services/http-error-handler.service';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-http-error',
@@ -8,5 +7,5 @@ import { HttpErrorHandlerService } from '../../services/http-error-handler.servi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HttpErrorComponent {
-  constructor(public httpErrorHandlerService: HttpErrorHandlerService) {}
+  @Input() error!: Error | null;
 }
