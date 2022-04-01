@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LocalStorageTokenService } from './local-storage-token.service';
-import { JwtCodecService } from './jwt-codec.service';
+import { LocalStorageTokenService } from './local-starage-token/local-storage-token.service';
+import { JwtCodecService } from './jwt-codec/jwt-codec.service';
 
 export type TAuthFormValue = {
   name: string;

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { EMPTY } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { SpinnerService } from './spinner.service';
-import { HttpErrorHandlerService } from './http-error-handler.service';
+import { SpinnerService } from '../spinner/spinner.service';
+import { HttpErrorHandlerService } from '../http-error-handler/http-error-handler.service';
 
 export class SwapiHttpService {
   protected baseUrl = 'https://swapi.dev/api';

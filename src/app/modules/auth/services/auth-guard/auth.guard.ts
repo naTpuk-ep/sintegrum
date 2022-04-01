@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanLoad, Router } from '@angular/router';
-import { LocalStorageTokenService } from './local-storage-token.service';
-import { AuthService } from './auth.service';
-import { JwtCodecService } from './jwt-codec.service';
+import { LocalStorageTokenService } from '../local-starage-token/local-storage-token.service';
+import { AuthService } from '../auth.service';
+import { JwtCodecService } from '../jwt-codec/jwt-codec.service';
 
 @Injectable()
 export class AuthGuard implements CanLoad {

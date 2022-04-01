@@ -7,11 +7,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthComponent } from './auth.component';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './services/auth-guard/auth.guard';
 import { AuthService } from './services/auth.service';
-import { JwtCodecService } from './services/jwt-codec.service';
-import { LocalStorageTokenService } from './services/local-storage-token.service';
-import { JwtInterceptor } from './services/jwt.interceptor';
+import { JwtCodecService } from './services/jwt-codec/jwt-codec.service';
+import { LocalStorageTokenService } from './services/local-starage-token/local-storage-token.service';
+import { JwtInterceptor } from './services/jwt-interceptor/jwt.interceptor';
 
 @NgModule({
   declarations: [AuthComponent],

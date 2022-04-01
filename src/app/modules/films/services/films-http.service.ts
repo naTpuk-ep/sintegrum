@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SwapiHttpService } from '../../layout/services/swapi-http.service';
-import { SpinnerService } from '../../layout/services/spinner.service';
-import { HttpErrorHandlerService } from '../../layout/services/http-error-handler.service';
+import { SwapiHttpService } from '../../layout/services/swapi-http/swapi-http.service';
+import { SpinnerService } from '../../layout/services/spinner/spinner.service';
+import { HttpErrorHandlerService } from '../../layout/services/http-error-handler/http-error-handler.service';
 
 export interface IFilmListItem {
   episode_id: number;

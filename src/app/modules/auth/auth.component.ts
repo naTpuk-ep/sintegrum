@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { fromEvent, of } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { AuthService, TAuthFormValue } from './services/auth.service';
 
 @Component({
@@ -40,7 +40,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     this.authService.loginSubscribe(loginSubmit$);
   }
 
-  get nameError() {
+  get nameError(): string {
     return this.authFormGroup.controls.name?.errors?.minlength
       ? 'Enter at least 5 characters'
       : this.authFormGroup.controls.name?.errors?.required
@@ -48,7 +48,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
       : '';
   }
 
-  get passwordError() {
+  get passwordError(): string {
     return this.authFormGroup.controls.password?.errors?.minlength
       ? 'Enter at least 5 characters'
       : this.authFormGroup.controls.password?.errors?.required

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as jwtEncode from 'jwt-encode';
-import { TTokenPayload } from './auth.service';
+import { TTokenPayload } from '../auth.service';
 
 @Injectable()
 export class JwtCodecService {

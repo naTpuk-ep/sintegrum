@@ -1,5 +1,6 @@
-.font-color {
-  color: rgba(0, 0, 0, 0.69);
+:root {
+  --content-background-color: #fafafa;
+  --font-color: rgba(0, 0, 0, 0.69);
 }
 
 @mixin icon-size($size) {
@@ -13,4 +14,8 @@ $sizes: 50;
   .mat-icon.icon-size__#{$size} {
     @include icon-size($size);
   }
+}
+
+.font-color {
+  color: var(--font-color);
 }
