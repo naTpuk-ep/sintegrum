@@ -10,7 +10,6 @@ import { HttpErrorHandlerService } from './services/http-error-handler/http-erro
 })
 export class LayoutComponent implements OnInit {
   error!: Error | null;
-  spinnerStatus!: boolean;
   constructor(
     public spinnerService: SpinnerService,
     public httpErrorHandlerService: HttpErrorHandlerService
@@ -19,11 +18,5 @@ export class LayoutComponent implements OnInit {
     this.httpErrorHandlerService.error$$.subscribe((error) => {
       this.error = error;
     });
-    this.spinnerService.status$$.subscribe((status) => {
-      this.spinnerStatus = status;
-    });
-  }
-  get viewContent(): boolean {
-    return !this.error && !this.spinnerStatus;
   }
 }

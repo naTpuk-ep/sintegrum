@@ -8,6 +8,7 @@ import {
 import { MatButton } from '@angular/material/button';
 import { fromEvent } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
+import { SideNavService } from '../../services/sidenav/side-nav.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -17,8 +18,9 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class ToolbarComponent implements OnInit, AfterViewInit {
   @ViewChild('logOutBtn') logOutBtnRef!: MatButton;
+  @ViewChild('menuToggleBtn') menuToggleBtn!: MatButton;
   userName!: string;
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private sideNavService: SideNavService) {}
 
   ngOnInit() {
     this.userName = this.authService.payload.name;
@@ -26,6 +28,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.observeLogout();
+    this.observeMenuExpandToggle();
+  }
+
+  private observeMenuExpandToggle() {
+    this.sideNavService.toggler$ = fromEvent(this.menuToggleBtn._getHostElement(), 'click');
   }
 
   private observeLogout() {

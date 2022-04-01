@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 import { SpinnerService } from './services/spinner/spinner.service';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -15,9 +16,17 @@ import { HttpErrorHandlerService } from './services/http-error-handler/http-erro
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { JwtInterceptor } from '../auth/services/jwt-interceptor/jwt.interceptor';
 import { HttpErrorComponent } from './components/http-error/http-error.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { SideNavService } from './services/sidenav/side-nav.service';
 
 @NgModule({
-  declarations: [LayoutComponent, ToolbarComponent, SpinnerComponent, HttpErrorComponent],
+  declarations: [
+    LayoutComponent,
+    HttpErrorComponent,
+    ToolbarComponent,
+    SpinnerComponent,
+    SideNavComponent,
+  ],
   imports: [
     CommonModule,
     LayoutRoutingModule,
@@ -28,6 +37,7 @@ import { HttpErrorComponent } from './components/http-error/http-error.component
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatDialogModule,
+    MatListModule,
   ],
   providers: [
     {
@@ -37,6 +47,7 @@ import { HttpErrorComponent } from './components/http-error/http-error.component
     },
     SpinnerService,
     HttpErrorHandlerService,
+    SideNavService,
   ],
 })
 export class LayoutModule {}

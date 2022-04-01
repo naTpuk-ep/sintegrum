@@ -1,9 +1,9 @@
 <app-toolbar></app-toolbar>
-<mat-drawer-container class="drawer-container">
-  <mat-drawer mode="side" class="side-nav-container" opened>Menu</mat-drawer>
+<div class="drawer-container">
+  <app-side-nav></app-side-nav>
   <div class="content-container">
-    <app-spinner *ngIf="spinnerStatus"></app-spinner>
+    <app-spinner *ngIf="spinnerService.status$$ | async"></app-spinner>
     <app-http-error *ngIf="error" [error]="error"></app-http-error>
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </div>
-</mat-drawer-container>
+</div>

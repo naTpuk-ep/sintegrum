@@ -1,7 +1,16 @@
 .drawer-container {
   height: calc(100% - 64px);
+  overflow: hidden;
+  display: flex;
 }
 
 .side-nav-container {
   width: 320px;
+}
+
+.content-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
