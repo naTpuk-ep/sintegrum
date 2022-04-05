@@ -3,8 +3,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit,
 } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SideNavService } from '../../services/sidenav/side-nav.service';
 
 @Component({
@@ -14,12 +14,9 @@ import { SideNavService } from '../../services/sidenav/side-nav.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavComponent implements AfterViewInit {
-  toggler = this.sideNavService.toggleInitState;
-  constructor(private sideNavService: SideNavService, private cdRef: ChangeDetectorRef) {}
+  toggler$!: Observable<boolean>;
+  constructor(public sideNavService: SideNavService) {}
   ngAfterViewInit() {
-    this.sideNavService.toggler$.subscribe((toggler) => {
-      this.toggler = toggler;
-      this.cdRef.detectChanges();
-    });
+    this.toggler$ = this.sideNavService.toggler$;
   }
 }

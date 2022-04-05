@@ -1,5 +1,9 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" class="side-nav-container" [opened]="toggler">
+  <mat-sidenav
+    mode="side"
+    class="side-nav-container"
+    [opened]="toggler$ === undefined ? this.sideNavService.toggleInitState : (toggler$ | async)"
+  >
     <mat-nav-list>
       <mat-list-item>
         <mat-icon mat-list-icon>home</mat-icon>
