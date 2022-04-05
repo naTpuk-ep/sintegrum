@@ -5,7 +5,7 @@
     [opened]="toggler$ === undefined ? this.sideNavService.toggleInitState : (toggler$ | async)"
   >
     <mat-nav-list>
-      <mat-list-item>
+      <mat-list-item role="navigation" routerLink="/">
         <mat-icon mat-list-icon>home</mat-icon>
         Films
       </mat-list-item>

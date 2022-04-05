@@ -5,9 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { FilmListComponent } from './components/film-list/film-list.component';
 import { FilmsHttpService } from './services/films-http.service';
 import { FilmsRoutingModule } from './films-routing.module';
+import { FilmAboutComponent } from './components/film-about/film-about.component';
 
 @NgModule({
-  declarations: [FilmListComponent],
+  declarations: [FilmListComponent, FilmAboutComponent],
   imports: [CommonModule, FilmsRoutingModule, MatCardModule, MatButtonModule],
   providers: [FilmsHttpService],
 })
