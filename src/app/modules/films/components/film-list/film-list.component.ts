@@ -9,7 +9,7 @@ import { FilmsHttpService, IFilmListItem } from '../../services/films-http.servi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmListComponent implements OnInit {
-  filmsList$?: Observable<Readonly<IFilmListItem[]>>;
+  filmsList$!: Observable<Readonly<IFilmListItem[]>>;
   constructor(private filmsHttpService: FilmsHttpService) {}
 
   ngOnInit(): void {
@@ -17,6 +17,6 @@ export class FilmListComponent implements OnInit {
   }
 
   private getFilmList() {
-    this.filmsList$ = this.filmsHttpService.getFilmList();
+    this.filmsList$ = this.filmsHttpService.filmsList$;
   }
 }

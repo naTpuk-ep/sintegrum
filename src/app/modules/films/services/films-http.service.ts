@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SwapiHttpService } from '../../layout/services/swapi-http/swapi-http.service';
@@ -25,12 +25,14 @@ export interface IGetFilmsResponse {
 
 @Injectable()
 export class FilmsHttpService extends SwapiHttpService {
+  filmsList$: Observable<Readonly<IFilmListItem[]>>;
   constructor(
     protected httpClient: HttpClient,
     protected spinnerService: SpinnerService,
     protected httpErrorHandlerService: HttpErrorHandlerService
   ) {
     super(httpClient, spinnerService, httpErrorHandlerService);
+    this.filmsList$ = this.getFilmList();
   }
   getFilmList(): Observable<Readonly<IFilmListItem[]>> {
     const mapResult = ({
@@ -49,8 +51,9 @@ export class FilmsHttpService extends SwapiHttpService {
       episode_id,
     });
 
-    return this._get<IGetFilmsResponse>(`${this.baseUrl}/films`).pipe(
-      map((response: IGetFilmsResponse) => response.results.map(mapResult))
+    return this.get<IGetFilmsResponse>(`${this.baseUrl}/films`).pipe(
+      map((response: IGetFilmsResponse) => response.results.map(mapResult)),
+      shareReplay()
     );
   }
 }

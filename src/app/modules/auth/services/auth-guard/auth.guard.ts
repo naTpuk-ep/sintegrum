@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, Router } from '@angular/router';
+import { CanLoad } from '@angular/router';
 import { LocalStorageTokenService } from '../local-starage-token/local-storage-token.service';
 import { AuthService } from '../auth.service';
 import { JwtCodecService } from '../jwt-codec/jwt-codec.service';
@@ -10,8 +10,7 @@ export class AuthGuard implements CanLoad {
   constructor(
     private localStorageTokenService: LocalStorageTokenService,
     private authService: AuthService,
-    private jwtCodecService: JwtCodecService,
-    private router: Router
+    private jwtCodecService: JwtCodecService
   ) {}
   canLoad(): boolean {
     const token = this.localStorageTokenService.get();
@@ -22,7 +21,7 @@ export class AuthGuard implements CanLoad {
         return true;
       }
     }
-    this.router.navigate(['auth']);
+    this.authService.logout();
     return false;
   }
   private isExpTimeCorrect(time: number) {
