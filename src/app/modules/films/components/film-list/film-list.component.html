@@ -12,17 +12,12 @@
     <p>{{ filmListItem.opening_crawl }}</p>
   </mat-card-content>
   <mat-card-actions class="film-card__link">
-    <!--    <a-->
-    <!--    >-->
-    <button
+    <a
       [routerLink]="routerLink"
       [replaceUrl]="true"
-      [queryParams]="{ id: filmListItem.episode_id }"
-      role="link"
-      mat-button
+      [queryParams]="getEpisodeQueryParams(filmListItem)"
     >
-      About film
-    </button>
-    <!--    </a>-->
+      <button mat-button>About film</button>
+    </a>
   </mat-card-actions>
 </mat-card>

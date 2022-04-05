@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { defer, EMPTY } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { SpinnerService } from '../spinner/spinner.service';
 import { HttpErrorHandlerService } from '../http-error-handler/http-error-handler.service';
 

@@ -3,7 +3,7 @@
   <app-side-nav></app-side-nav>
   <div class="content-container">
     <app-spinner *ngIf="spinnerService.status$$ | async"></app-spinner>
-    <app-http-error *ngIf="error" [error]="error"></app-http-error>
+    <app-http-error *ngIf="error$$ | async" [error]="error$$ | async"></app-http-error>
     <router-outlet></router-outlet>
   </div>
 </div>

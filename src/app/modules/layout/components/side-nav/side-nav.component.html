@@ -2,7 +2,7 @@
   <mat-sidenav
     mode="side"
     class="side-nav-container"
-    [opened]="toggler$ === undefined ? this.sideNavService.toggleInitState : (toggler$ | async)"
+    [opened]="toggler$ === undefined ? sideNavService.toggleInitState : (toggler$ | async)"
   >
     <mat-nav-list>
       <mat-list-item role="navigation" routerLink="/">

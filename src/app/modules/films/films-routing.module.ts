@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FilmListComponent } from './components/film-list/film-list.component';
-import { FilmAboutComponent } from './components/film-about/film-about.component';
+import { EpisodeComponent } from './components/episode/episode.component';
 
 const routes: Routes = [
   {
@@ -14,8 +14,8 @@ const routes: Routes = [
     component: FilmListComponent,
   },
   {
-    path: 'about',
-    component: FilmAboutComponent,
+    path: 'episode',
+    component: EpisodeComponent,
   },
 ];
 

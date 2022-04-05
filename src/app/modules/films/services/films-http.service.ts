@@ -23,17 +23,38 @@ export interface IGetFilmsResponse {
   results: Readonly<IFilmListItemResults>[];
 }
 
+export interface IEpisodeInfo {
+  title: string;
+  episode_id: number;
+  opening_crawl: string;
+  director: string;
+  producer: string;
+  release_date: string;
+  characters: string[];
+  planets: string[];
+  starships: string[];
+  vehicles: string[];
+  created: string;
+  edited: string;
+  url: string;
+}
+
 @Injectable()
 export class FilmsHttpService extends SwapiHttpService {
-  filmsList$: Observable<Readonly<IFilmListItem[]>>;
+  filmList$: Observable<Readonly<IFilmListItem[]>>;
   constructor(
     protected httpClient: HttpClient,
     protected spinnerService: SpinnerService,
     protected httpErrorHandlerService: HttpErrorHandlerService
   ) {
     super(httpClient, spinnerService, httpErrorHandlerService);
-    this.filmsList$ = this.getFilmList();
+    this.filmList$ = this.getFilmList();
   }
+
+  getEpisodeInfo(episode: number): Observable<Readonly<IEpisodeInfo>> {
+    return this.get<IEpisodeInfo>(`${this.baseUrl}/films/${episode}`).pipe(shareReplay());
+  }
+
   getFilmList(): Observable<Readonly<IFilmListItem[]>> {
     const mapResult = ({
       url,
