@@ -21,14 +21,24 @@ export type TTokenPayload = {
 @Injectable()
 export class AuthService {
   payload!: TTokenPayload;
+  private expTime = 3200000;
   constructor(
     private localStorageTokenService: LocalStorageTokenService,
     private jwtCodecService: JwtCodecService,
     private router: Router
   ) {}
 
-  setPayload(payload: TTokenPayload) {
-    this.payload = payload;
+  isAuthorized(): boolean {
+    const token = this.localStorageTokenService.get();
+    if (token) {
+      const payload = this.jwtCodecService.parsePayload(token);
+      if (this.isExpTimeCorrect(payload.exp)) {
+        this.payload = payload;
+        return true;
+      }
+    }
+    this.logout();
+    return false;
   }
 
   loginSubscribe(authFormValue$: Observable<TAuthFormValue>) {
@@ -52,6 +62,10 @@ export class AuthService {
 
   resetLoginStatus() {
     this.localStorageTokenService.remove();
+  }
+
+  private isExpTimeCorrect(time: number) {
+    return time + this.expTime > Date.now();
   }
 
   private createPayload({ name }: TAuthFormValue): TTokenPayload {
