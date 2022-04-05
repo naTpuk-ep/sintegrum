@@ -1,3 +1,23 @@
-<div *ngFor="let filmListItem of filmsList$ | async">
-  {{ filmListItem | json }}
-</div>
+<mat-card *ngFor="let filmListItem of filmsList$ | async" class="film-card">
+  <mat-card-header>
+    <mat-card-title>{{ filmListItem.title }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ filmListItem.release_date }}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      {{ filmListItem.producer }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ filmListItem.opening_crawl }}</p>
+  </mat-card-content>
+  <mat-card-actions class="film-card__link">
+    <a
+      [routerLink]="routerLink"
+      [replaceUrl]="true"
+      [queryParams]="{ id: filmListItem.episode_id }"
+    >
+      <button mat-button>About film</button>
+    </a>
+  </mat-card-actions>
+</mat-card>

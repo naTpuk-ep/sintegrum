@@ -10,6 +10,7 @@ import { FilmsHttpService, IFilmListItem } from '../../services/films-http.servi
 })
 export class FilmListComponent implements OnInit {
   filmsList$!: Observable<Readonly<IFilmListItem[]>>;
+  routerLink = '/content/films/about';
   constructor(private filmsHttpService: FilmsHttpService) {}
 
   ngOnInit(): void {

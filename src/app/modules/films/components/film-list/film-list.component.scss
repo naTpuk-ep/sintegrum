@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 32px;
+  justify-content: center;
+  max-width: 1280px;
+  margin: auto;
+}
+
+.film-card {
+  margin: 16px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  &__link {
+    align-self: flex-end;
+    margin-top: auto;
+  }
+}
+

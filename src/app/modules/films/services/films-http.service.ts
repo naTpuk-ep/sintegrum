@@ -52,7 +52,9 @@ export class FilmsHttpService extends SwapiHttpService {
     });
 
     return this.get<IGetFilmsResponse>(`${this.baseUrl}/films`).pipe(
-      map((response: IGetFilmsResponse) => response.results.map(mapResult)),
+      map((response: IGetFilmsResponse) =>
+        response.results.map(mapResult).sort((a, b) => a.episode_id - b.episode_id)
+      ),
       shareReplay()
     );
   }
