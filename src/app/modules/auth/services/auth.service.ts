@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageTokenService } from './local-starage-token/local-storage-token.service';
 import { JwtCodecService } from './jwt-codec/jwt-codec.service';
 
@@ -21,12 +22,25 @@ export type TTokenPayload = {
 @Injectable()
 export class AuthService {
   payload!: TTokenPayload;
-  private expTime = 3200000;
+  errorMessage$$ = new Subject<string>();
+  tokenExpErrorMessage = 'Token has expired.';
+  private expTime = 10000;
   constructor(
     private localStorageTokenService: LocalStorageTokenService,
     private jwtCodecService: JwtCodecService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private matSnackBar: MatSnackBar
+  ) {
+    this.errorMessage$$.subscribe((message) => {
+      if (message) {
+        this.matSnackBar.open(message, undefined, {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+      }
+    });
+  }
 
   isAuthorized(): boolean {
     const token = this.localStorageTokenService.get();
@@ -34,9 +48,12 @@ export class AuthService {
       const payload = this.jwtCodecService.parsePayload(token);
       if (this.isExpTimeCorrect(payload.exp)) {
         this.payload = payload;
+        this.errorMessage$$.next();
         return true;
       }
+      this.errorMessage$$.next(this.tokenExpErrorMessage);
     }
+    this.errorMessage$$.next();
     this.logout();
     return false;
   }

@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthComponent } from './auth.component';
 import { AuthGuard } from './services/auth-guard/auth.guard';
 import { AuthService } from './services/auth.service';
@@ -20,6 +21,7 @@ import { LocalStorageTokenService } from './services/local-starage-token/local-s
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
   exports: [AuthComponent],
   providers: [AuthGuard, AuthService, LocalStorageTokenService, JwtCodecService],
