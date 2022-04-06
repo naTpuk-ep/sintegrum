@@ -1,5 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SideNavService } from '../../services/sidenav/side-nav.service';
 
 @Component({
@@ -8,10 +7,6 @@ import { SideNavService } from '../../services/sidenav/side-nav.service';
   styleUrls: ['./side-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SideNavComponent implements AfterViewInit {
-  toggler$!: Observable<boolean>;
+export class SideNavComponent {
   constructor(public sideNavService: SideNavService) {}
-  ngAfterViewInit() {
-    this.toggler$ = this.sideNavService.toggler$;
-  }
 }

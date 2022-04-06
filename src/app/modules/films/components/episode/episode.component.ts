@@ -21,7 +21,7 @@ export class EpisodeComponent implements OnInit {
   getEpisodeInfo() {
     const params$ = this.activatedRoute.queryParams as Observable<IEpisodeParams>;
     this.episode$ = params$.pipe(
-      switchMap((params) => this.filmsHttpService.getEpisodeInfo(params.episode))
+      switchMap((params) => this.filmsHttpService.getEpisodeInfo(params.n))
     );
     this.episode$.subscribe((res) => {
       console.log(res);

@@ -41,7 +41,7 @@ export interface IEpisodeInfo {
 
 @Injectable()
 export class FilmsHttpService extends SwapiHttpService {
-  filmList$: Observable<Readonly<IFilmListItem[]>>;
+  filmList$!: Observable<Readonly<IFilmListItem[]>>;
   constructor(
     protected httpClient: HttpClient,
     protected spinnerService: SpinnerService,

@@ -4,7 +4,7 @@ import { Params } from '@angular/router';
 import { FilmsHttpService, IFilmListItem } from '../../services/films-http.service';
 
 export interface IEpisodeParams extends Params {
-  episode: number;
+  n: number;
 }
 
 @Component({
@@ -24,10 +24,8 @@ export class FilmListComponent implements OnInit {
 
   getEpisodeQueryParams(filmListItem: IFilmListItem): IEpisodeParams {
     const splitUrl = filmListItem.url.split('/');
-    const episode = +splitUrl[splitUrl.length - 2];
-    return {
-      episode,
-    };
+    const n = +splitUrl[splitUrl.length - 2];
+    return { n };
   }
 
   private getFilmList() {

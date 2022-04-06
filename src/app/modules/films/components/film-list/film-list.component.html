@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title>{{ filmListItem.title }}</mat-card-title>
     <mat-card-subtitle>
-      {{ filmListItem.release_date }}
+      {{ filmListItem.release_date | date: "dd.MM.YYYY" }}
     </mat-card-subtitle>
     <mat-card-subtitle>
       {{ filmListItem.producer }}
