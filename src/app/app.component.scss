@@ -9,7 +9,7 @@
   width: $size+px;
 }
 
-$sizes: 50;
+$sizes: 24, 48;
 @each $size in $sizes {
   .mat-icon.icon-size__#{$size} {
     @include icon-size($size);

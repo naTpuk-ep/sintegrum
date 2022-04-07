@@ -1,0 +1,4 @@
+<mat-icon class="icon-size__24" color="warn">error</mat-icon>
+<span class="font-color" mat-dialog-title>{{
+  (errorHandlerService.error$$ | async)?.message
+}}</span>
