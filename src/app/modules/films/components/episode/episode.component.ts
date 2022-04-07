@@ -4,6 +4,7 @@ import { forkJoin, from, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
 import { FilmsHttpService, IEpisode, IPlanet } from '../../services/films-http.service';
 import { mockEpisodeString } from './episode.mock';
+import { IEpisodeParams } from '../film-list/film-list.component';
 
 @Component({
   selector: 'app-episode',
@@ -15,9 +16,9 @@ export class EpisodeComponent implements OnInit {
   episode?: Readonly<IEpisode>;
   planets$?: Observable<Readonly<IPlanet>[]>;
   constructor(
+    public filmsHttpService: FilmsHttpService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private filmsHttpService: FilmsHttpService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +26,12 @@ export class EpisodeComponent implements OnInit {
   }
 
   getEpisodeInfo() {
-    this.episode$ = of(<IEpisode>JSON.parse(mockEpisodeString));
+    this.episode$ = this.activatedRoute.queryParams.pipe(
+      switchMap((params) => this.filmsHttpService.getEpisode((<IEpisodeParams>params).film))
+    );
+    this.episode$.subscribe((episode) => {
+      this.episode = episode;
+    });
     this.planets$ = this.episode$.pipe(
       map((episode) => episode.planets.map((url) => this.filmsHttpService.getPlanet(url))),
       switchMap((planets$: Observable<Readonly<IPlanet>>[]) => forkJoin(planets$))

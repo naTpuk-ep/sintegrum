@@ -7,9 +7,10 @@ import { FilmsHttpService } from './services/films-http.service';
 import { FilmsRoutingModule } from './films-routing.module';
 import { EpisodeComponent } from './components/episode/episode.component';
 import { MatTableModule } from '@angular/material/table';
+import { EpisodeTableComponent } from './components/episode/episode-table/episode-table.component';
 
 @NgModule({
-  declarations: [FilmListComponent, EpisodeComponent],
+  declarations: [FilmListComponent, EpisodeComponent, EpisodeTableComponent],
   imports: [
     CommonModule,
     FilmsRoutingModule,
