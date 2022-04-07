@@ -22,8 +22,8 @@ export type TTokenPayload = {
 @Injectable()
 export class AuthService {
   payload!: TTokenPayload;
-  tokenExpErrorMessage = 'Token has expired.';
-  private expTime = 3600000;
+  tokenExpErrorMessage = 'Token has expired';
+  private expTime = 36000000;
   constructor(
     private localStorageTokenService: LocalStorageTokenService,
     private jwtCodecService: JwtCodecService,
@@ -41,6 +41,7 @@ export class AuthService {
       }
       this.errorHandlerService.error$$.next(new Error(this.tokenExpErrorMessage));
     }
+    console.log('isAuth');
     this.logout();
     return false;
   }

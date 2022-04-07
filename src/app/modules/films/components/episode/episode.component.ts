@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { FilmsHttpService, IEpisodeInfo } from '../../services/films-http.service';
-import { IEpisodeParams } from '../film-list/film-list.component';
+import { forkJoin, from, Observable, of } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
+import { FilmsHttpService, IEpisode, IPlanet } from '../../services/films-http.service';
+import { mockEpisodeString } from './episode.mock';
 
 @Component({
   selector: 'app-episode',
@@ -11,7 +11,9 @@ import { IEpisodeParams } from '../film-list/film-list.component';
   styleUrls: ['./episode.component.scss'],
 })
 export class EpisodeComponent implements OnInit {
-  episode$?: Observable<Readonly<IEpisodeInfo>>;
+  episode$?: Observable<Readonly<IEpisode>>;
+  episode?: Readonly<IEpisode>;
+  planets$?: Observable<Readonly<IPlanet>[]>;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -23,12 +25,10 @@ export class EpisodeComponent implements OnInit {
   }
 
   getEpisodeInfo() {
-    const params$ = this.activatedRoute.queryParams as Observable<IEpisodeParams>;
-    this.episode$ = params$.pipe(
-      switchMap((params) => this.filmsHttpService.getEpisodeInfo(params.film))
+    this.episode$ = of(<IEpisode>JSON.parse(mockEpisodeString));
+    this.planets$ = this.episode$.pipe(
+      map((episode) => episode.planets.map((url) => this.filmsHttpService.getPlanet(url))),
+      switchMap((planets$: Observable<Readonly<IPlanet>>[]) => forkJoin(planets$))
     );
-    this.episode$.subscribe((res) => {
-      console.log(res);
-    });
   }
 }

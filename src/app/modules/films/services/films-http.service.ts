@@ -24,7 +24,7 @@ export interface IGetFilmsResponse {
   results: Readonly<IFilmListItemResults>[];
 }
 
-export interface IEpisodeInfo {
+export interface IEpisode {
   title: string;
   episode_id: number;
   opening_crawl: string;
@@ -35,6 +35,23 @@ export interface IEpisodeInfo {
   planets: string[];
   starships: string[];
   vehicles: string[];
+  created: string;
+  edited: string;
+  url: string;
+}
+
+export interface IPlanet {
+  name: string;
+  rotation_period: number;
+  orbital_period: number;
+  diameter: number;
+  climate: string;
+  gravity: string;
+  terrain: string;
+  surface_water: number;
+  population: number;
+  residents: string[];
+  films: string[];
   created: string;
   edited: string;
   url: string;
@@ -53,8 +70,12 @@ export class FilmsHttpService extends SwapiHttpService {
     this.filmList$ = this.getFilmList();
   }
 
-  getEpisodeInfo(episode: number): Observable<Readonly<IEpisodeInfo>> {
-    return this.get<IEpisodeInfo>(`${this.baseUrl}/films/${episode}`).pipe(shareReplay());
+  getEpisode(filmId: number) {
+    return this.get<Readonly<IEpisode>>(`${this.baseUrl}/films/${filmId}`).pipe(shareReplay());
+  }
+
+  getPlanet(url: string) {
+    return this.get<Readonly<IPlanet>>(url);
   }
 
   getFilmList(): Observable<Readonly<IFilmListItem[]>> {

@@ -3,10 +3,8 @@
 //  box-sizing: border-box;
 //}
 
-@import "normalize.css";
-
 * {
-  box-sizing: border-box;
+  text-align: justify;
 }
 
 body {
@@ -16,4 +14,5 @@ body {
 
 html {
   overflow: hidden;
+  font-family: Roboto, Helvetica;
 }

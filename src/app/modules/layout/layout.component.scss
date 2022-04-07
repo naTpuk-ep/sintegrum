@@ -1,7 +1,9 @@
 .drawer-container {
   height: calc(100% - 64px);
+  width: 100%;
   overflow: hidden;
   display: flex;
+
 }
 
 .content-container {
@@ -10,4 +12,5 @@
   width: 100%;
   overflow: auto;
   background-color: var(--content-background-color);
+  padding-top: 32px;
 }
