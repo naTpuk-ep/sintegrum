@@ -10,16 +10,15 @@ export class SwapiHttpService {
   protected constructor(
     protected httpClient: HttpClient,
     protected spinnerService: SpinnerService,
-    protected httpErrorHandlerService: ErrorHandlerService,
+    protected errorHandlerService: ErrorHandlerService,
     protected router: Router
   ) {}
   protected get<T>(url: string, spinner = true) {
     return defer(() => {
       this.spinnerService.status$$.next(spinner);
-      console.log('defer');
       return this.httpClient.get<T>(url).pipe(
         catchError((err: Error) => {
-          this.httpErrorHandlerService.error$$.next(err);
+          this.errorHandlerService.error$$.next(err);
           this.router.navigate(['']);
           return EMPTY;
         }),

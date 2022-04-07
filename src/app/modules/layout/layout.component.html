@@ -2,7 +2,7 @@
 <div class="drawer-container">
   <app-side-nav></app-side-nav>
   <div class="content-container">
-    <app-spinner *ngIf="spinnerService.status$$ | async"></app-spinner>
+    <app-spinner *ngIf="spinner"></app-spinner>
     <router-outlet></router-outlet>
   </div>
 </div>

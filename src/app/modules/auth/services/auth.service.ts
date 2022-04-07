@@ -28,7 +28,7 @@ export class AuthService {
     private localStorageTokenService: LocalStorageTokenService,
     private jwtCodecService: JwtCodecService,
     private router: Router,
-    private httpErrorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandlerService
   ) {}
 
   isAuthorized(): boolean {
@@ -39,7 +39,7 @@ export class AuthService {
         this.payload = payload;
         return true;
       }
-      this.httpErrorHandlerService.error$$.next(new Error(this.tokenExpErrorMessage));
+      this.errorHandlerService.error$$.next(new Error(this.tokenExpErrorMessage));
     }
     this.logout();
     return false;

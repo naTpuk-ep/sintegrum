@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SpinnerService } from './services/spinner/spinner.service';
 import { ErrorHandlerService } from '../error-handler/error-handler.service';
@@ -10,12 +10,16 @@ import { ErrorHandlerService } from '../error-handler/error-handler.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent implements OnInit {
-  error$$?: Subject<Error>;
+  spinner?: boolean;
   constructor(
     public spinnerService: SpinnerService,
-    public httpErrorHandlerService: ErrorHandlerService
+    public errorHandlerService: ErrorHandlerService,
+    private cdRef: ChangeDetectorRef
   ) {}
   ngOnInit() {
-    this.error$$ = this.httpErrorHandlerService.error$$;
+    this.spinnerService.status$$.subscribe((spinner) => {
+      this.spinner = spinner;
+      this.cdRef.detectChanges();
+    });
   }
 }

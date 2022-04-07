@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class SpinnerService {
-  status$$ = new Subject<boolean>();
+  status$$ = new ReplaySubject<boolean>();
 }

@@ -9,13 +9,8 @@ export class ErrorHandlerService {
   constructor(private matSnackBar: MatSnackBar) {
     this.error$$.subscribe((error) => {
       this.matSnackBar.openFromComponent(ErrorComponent, {
-      
-      })
-      // open(error.message, undefined, {
-      //   duration: 5000,
-      //   horizontalPosition: 'center',
-      //   verticalPosition: 'bottom',
-      // });
+        duration: 5000,
+      });
     });
   }
 }

@@ -46,10 +46,10 @@ export class FilmsHttpService extends SwapiHttpService {
   constructor(
     protected httpClient: HttpClient,
     protected spinnerService: SpinnerService,
-    protected httpErrorHandlerService: ErrorHandlerService,
+    protected errorHandlerService: ErrorHandlerService,
     protected router: Router
   ) {
-    super(httpClient, spinnerService, httpErrorHandlerService, router);
+    super(httpClient, spinnerService, errorHandlerService, router);
     this.filmList$ = this.getFilmList();
   }
 
