@@ -8,6 +8,7 @@ import { FilmsRoutingModule } from './films-routing.module';
 import { EpisodeComponent } from './components/episode/episode.component';
 import { MatTableModule } from '@angular/material/table';
 import { EpisodeTableComponent } from './components/episode/episode-table/episode-table.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [FilmListComponent, EpisodeComponent, EpisodeTableComponent],
@@ -17,6 +18,7 @@ import { EpisodeTableComponent } from './components/episode/episode-table/episod
     MatCardModule,
     MatButtonModule,
     MatTableModule,
+    MatTabsModule,
   ],
   providers: [FilmsHttpService],
 })
