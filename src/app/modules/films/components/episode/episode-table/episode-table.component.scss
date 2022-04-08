@@ -4,7 +4,7 @@
 }
 table {
   width: 100%;
-  th:first-letter {
+  th:first-letter,td:first-letter {
     text-transform: uppercase;
   }
 }
