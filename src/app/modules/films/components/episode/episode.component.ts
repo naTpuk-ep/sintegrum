@@ -41,23 +41,24 @@ export interface IEpisodeTabData<T = any> {
   templateUrl: './episode.component.html',
   styleUrls: ['./episode.component.scss'],
 })
-export class EpisodeComponent implements OnInit, AfterViewInit {
+export class EpisodeComponent implements OnInit {
   episode$!: Observable<Readonly<IEpisode>>;
   episode!: Readonly<IEpisode>;
-  planets$!: Observable<Readonly<IPlanet>[]>;
+  getDataFromEpisodeMethods: IGetDataFromEpisodeMethods;
   episodeTabsData!: IEpisodeTabData<IPlanet[] | IStarship[] | ICharacter[]>[];
   selectedIndex: number = 0;
-  constructor(
-    public filmsHttpService: FilmsHttpService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(public filmsHttpService: FilmsHttpService, private activatedRoute: ActivatedRoute) {
+    this.getDataFromEpisodeMethods = {
+      starships: this.filmsHttpService.getStarship.bind(this.filmsHttpService),
+      planets: this.filmsHttpService.getPlanet.bind(this.filmsHttpService),
+      characters: this.filmsHttpService.getCharacter.bind(this.filmsHttpService),
+    };
+  }
 
   ngOnInit(): void {
     this.getEpisodeData();
+    this.getTabsData();
   }
-
-  ngAfterViewInit() {}
 
   getEpisodeData() {
     this.episode$ = this.activatedRoute.queryParams.pipe(
@@ -68,19 +69,21 @@ export class EpisodeComponent implements OnInit, AfterViewInit {
     this.episode$.subscribe((episode) => {
       this.episode = episode;
     });
-    const getDataFromEpisodeMethods: IGetDataFromEpisodeMethods = {
-      starships: this.filmsHttpService.getStarship.bind(this.filmsHttpService),
-      planets: this.filmsHttpService.getPlanet.bind(this.filmsHttpService),
-      characters: this.filmsHttpService.getCharacter.bind(this.filmsHttpService),
-    };
+  }
 
-    this.episodeTabsData = Object.entries(getDataFromEpisodeMethods).map(([key, method]) => ({
+  getEpisodeContent(key: TTabKey, method: IGetDataFromEpisodeMethods[TTabKey]) {
+    return this.episode$.pipe(
+      map((episode) => episode[<keyof IGetDataFromEpisodeMethods>key].map((url) => method(url))),
+      switchMap((itemObservableArray) => <Observable<any[]>>forkJoin(itemObservableArray)),
+      shareReplay()
+    );
+  }
+
+  getTabsData() {
+    this.episodeTabsData = Object.entries(this.getDataFromEpisodeMethods).map(([key, method]) => ({
       label: key,
       columns: tableColumns[<TTabKey>key],
-      content$: this.episode$.pipe(
-        map((episode) => episode[<keyof IGetDataFromEpisodeMethods>key].map((url) => method(url))),
-        switchMap((itemObservableArray) => <Observable<any[]>>forkJoin(itemObservableArray))
-      ),
+      content$: this.getEpisodeContent(<TTabKey>key, method),
     }));
   }
 
