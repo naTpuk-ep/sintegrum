@@ -10,13 +10,30 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, from, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
-import { FilmsHttpService, IEpisode, IPlanet } from '../../services/films-http.service';
-import { mockEpisodeString, mockPlanets } from './mock';
+import {
+  FilmsHttpService,
+  ICharacter,
+  IEpisode,
+  IPlanet,
+  IStarship,
+} from '../../services/films-http.service';
+import { mockEpisodeString, mockPlanets, peopleMock, starshipsMock } from './mock';
 import { IEpisodeParams } from '../film-list/film-list.component';
+import { ITableConfig } from './episode-table/episode-table.component';
+import { tableColumns } from './episode-table.config';
 
-interface IEpisodeTab<T = any> {
+export interface IGetDataFromEpisodeMethods {
+  starships: (url: string) => Observable<Readonly<IStarship>>;
+  planets: (url: string) => Observable<Readonly<IPlanet>>;
+  characters: (url: string) => Observable<Readonly<ICharacter>>;
+}
+
+export type TTabKey = keyof IGetDataFromEpisodeMethods;
+
+export interface IEpisodeTabData<T = any> {
   label: string;
-  content$?: Observable<T>;
+  content$: Observable<T>;
+  columns: string[];
 }
 
 @Component({
@@ -28,8 +45,7 @@ export class EpisodeComponent implements OnInit, AfterViewInit {
   episode$!: Observable<Readonly<IEpisode>>;
   episode!: Readonly<IEpisode>;
   planets$!: Observable<Readonly<IPlanet>[]>;
-  episodeTabs!: IEpisodeTab<IPlanet[]>[];
-
+  episodeTabsData!: IEpisodeTabData<IPlanet[] | IStarship[] | ICharacter[]>[];
   selectedIndex: number = 0;
   constructor(
     public filmsHttpService: FilmsHttpService,
@@ -44,43 +60,28 @@ export class EpisodeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   getEpisodeData() {
-    this.episode$ = of(JSON.parse(mockEpisodeString) as IEpisode);
+    this.episode$ = this.activatedRoute.queryParams.pipe(
+      switchMap((params) => this.filmsHttpService.getEpisode((<IEpisodeParams>params).film)),
+      shareReplay()
+    );
 
-    //   this.activatedRoute.queryParams.pipe(
-    //   switchMap((params) => this.filmsHttpService.getEpisode((<IEpisodeParams>params).film))
-    // );
     this.episode$.subscribe((episode) => {
       this.episode = episode;
     });
+    const getDataFromEpisodeMethods: IGetDataFromEpisodeMethods = {
+      starships: this.filmsHttpService.getStarship.bind(this.filmsHttpService),
+      planets: this.filmsHttpService.getPlanet.bind(this.filmsHttpService),
+      characters: this.filmsHttpService.getCharacter.bind(this.filmsHttpService),
+    };
 
-    const planets$1 = of(JSON.parse(mockPlanets)).pipe(
-      tap(() => {
-        console.log('planet 1');
-      })
-    );
-    const planets$2 = of(JSON.parse(mockPlanets)).pipe(
-      tap(() => {
-        console.log('planet 2');
-      })
-    );
-
-    this.episodeTabs = [
-      {
-        label: 'planets1',
-        content$: planets$1,
-      },
-      {
-        label: 'planets1',
-        content$: planets$2,
-      },
-    ];
-
-    // this.episodeTabs$ = of([{ label: 'Label', content:  }, JSON.parse(mockPlanets)]);
-
-    //   this.episode$.pipe(
-    //   map((episode) => episode.planets.map((url) => this.filmsHttpService.getPlanet(url))),
-    //   switchMap((planets$: Observable<Readonly<IPlanet>>[]) => forkJoin(planets$))
-    // );
+    this.episodeTabsData = Object.entries(getDataFromEpisodeMethods).map(([key, method]) => ({
+      label: key,
+      columns: tableColumns[<TTabKey>key],
+      content$: this.episode$.pipe(
+        map((episode) => episode[<keyof IGetDataFromEpisodeMethods>key].map((url) => method(url))),
+        switchMap((itemObservableArray) => <Observable<any[]>>forkJoin(itemObservableArray))
+      ),
+    }));
   }
 
   selectedIndexChange(index: number) {

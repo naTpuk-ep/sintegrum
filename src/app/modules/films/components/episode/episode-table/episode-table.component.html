@@ -1,1 +1,8 @@
-{{ data$ | async | json }}
+<table mat-table [dataSource]="(data.content$ | async) || []">
+  <ng-container *ngFor="let column of data.columns" [matColumnDef]="column">
+    <th mat-header-cell *matHeaderCellDef>{{ formatHeader(column) }}</th>
+    <td mat-cell *matCellDef="let element">{{ formatCellValue(element[column]) }}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="data.columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: data.columns"></tr>
+</table>
