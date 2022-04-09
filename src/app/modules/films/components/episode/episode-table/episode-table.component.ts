@@ -1,7 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { IEpisode } from '../../../services/films-http.service';
 import { IEpisodeTabData } from '../episode.component';
 
 export interface ITableConfig<T extends object = any> {
@@ -14,6 +12,7 @@ export interface ITableConfig<T extends object = any> {
   templateUrl: './episode-table.component.html',
   styleUrls: ['./episode-table.component.scss'],
   providers: [DatePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EpisodeTableComponent {
   @Input() data!: IEpisodeTabData;

@@ -1,15 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, from, Observable, of } from 'rxjs';
-import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin, Observable } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 import {
   FilmsHttpService,
   ICharacter,
@@ -17,9 +9,7 @@ import {
   IPlanet,
   IStarship,
 } from '../../services/films-http.service';
-import { mockEpisodeString, mockPlanets, peopleMock, starshipsMock } from './mock';
 import { IEpisodeParams } from '../film-list/film-list.component';
-import { ITableConfig } from './episode-table/episode-table.component';
 import { tableColumns } from './episode-table.config';
 
 export interface IGetDataFromEpisodeMethods {
@@ -40,15 +30,20 @@ export interface IEpisodeTabData<T = any> {
   selector: 'app-episode',
   templateUrl: './episode.component.html',
   styleUrls: ['./episode.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EpisodeComponent implements OnInit {
   episode$!: Observable<Readonly<IEpisode>>;
   episode!: Readonly<IEpisode>;
-  getDataFromEpisodeMethods: IGetDataFromEpisodeMethods;
+  getEpisodeSubDataMethods: IGetDataFromEpisodeMethods;
   episodeTabsData!: IEpisodeTabData<IPlanet[] | IStarship[] | ICharacter[]>[];
   selectedIndex: number = 0;
-  constructor(public filmsHttpService: FilmsHttpService, private activatedRoute: ActivatedRoute) {
-    this.getDataFromEpisodeMethods = {
+  constructor(
+    public filmsHttpService: FilmsHttpService,
+    private activatedRoute: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
+  ) {
+    this.getEpisodeSubDataMethods = {
       starships: this.filmsHttpService.getStarship.bind(this.filmsHttpService),
       planets: this.filmsHttpService.getPlanet.bind(this.filmsHttpService),
       characters: this.filmsHttpService.getCharacter.bind(this.filmsHttpService),
@@ -60,18 +55,22 @@ export class EpisodeComponent implements OnInit {
     this.getTabsData();
   }
 
-  getEpisodeData() {
+  selectedIndexChange(index: number) {
+    this.selectedIndex = index;
+  }
+
+  private getEpisodeData() {
     this.episode$ = this.activatedRoute.queryParams.pipe(
       switchMap((params) => this.filmsHttpService.getEpisode((<IEpisodeParams>params).film)),
       shareReplay()
     );
-
     this.episode$.subscribe((episode) => {
       this.episode = episode;
+      this.cdRef.detectChanges();
     });
   }
 
-  getEpisodeContent(key: TTabKey, method: IGetDataFromEpisodeMethods[TTabKey]) {
+  private getEpisodeContent(key: TTabKey, method: IGetDataFromEpisodeMethods[TTabKey]) {
     return this.episode$.pipe(
       map((episode) => episode[<keyof IGetDataFromEpisodeMethods>key].map((url) => method(url))),
       switchMap((itemObservableArray) => <Observable<any[]>>forkJoin(itemObservableArray)),
@@ -79,15 +78,11 @@ export class EpisodeComponent implements OnInit {
     );
   }
 
-  getTabsData() {
-    this.episodeTabsData = Object.entries(this.getDataFromEpisodeMethods).map(([key, method]) => ({
+  private getTabsData() {
+    this.episodeTabsData = Object.entries(this.getEpisodeSubDataMethods).map(([key, method]) => ({
       label: key,
       columns: tableColumns[<TTabKey>key],
       content$: this.getEpisodeContent(<TTabKey>key, method),
     }));
-  }
-
-  selectedIndexChange(index: number) {
-    this.selectedIndex = index;
   }
 }
