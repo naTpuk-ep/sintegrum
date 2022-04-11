@@ -22,7 +22,7 @@ export type TTabKey = keyof IGetDataFromEpisodeMethods;
 
 export interface IEpisodeTabData<T = any> {
   label: string;
-  content$: Observable<T>;
+  content$: Observable<T[]>;
   columns: string[];
 }
 

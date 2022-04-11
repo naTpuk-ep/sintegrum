@@ -4,8 +4,8 @@
 }
 table {
   width: 100%;
-  th:first-letter,td:first-letter {
-    text-transform: uppercase;
+  th,td {
+    text-transform: capitalize;
   }
   .table-row {
     transition: 0.2s;

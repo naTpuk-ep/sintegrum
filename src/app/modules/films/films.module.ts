@@ -11,6 +11,7 @@ import { EpisodeTableComponent } from './components/episode/episode-table/episod
 import { MatTabsModule } from '@angular/material/tabs';
 import { EpisodeDialogComponent } from './components/episode/episode-dialog/episode-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [FilmListComponent, EpisodeComponent, EpisodeTableComponent, EpisodeDialogComponent],
@@ -22,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTableModule,
     MatTabsModule,
     MatDialogModule,
+    MatSortModule,
   ],
   providers: [FilmsHttpService],
 })
