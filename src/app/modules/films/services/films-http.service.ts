@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { SwapiHttpService } from '../../layout/services/swapi-http/swapi-http.service';
-import { SpinnerService } from '../../layout/services/spinner/spinner.service';
 import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 
 export interface IFilmListItem {
@@ -102,11 +101,10 @@ export class FilmsHttpService extends SwapiHttpService {
   filmList$!: Observable<Readonly<IFilmListItem[]>>;
   constructor(
     protected httpClient: HttpClient,
-    protected spinnerService: SpinnerService,
     protected errorHandlerService: ErrorHandlerService,
     protected router: Router
   ) {
-    super(httpClient, spinnerService, errorHandlerService, router);
+    super(httpClient, errorHandlerService, router);
     this.filmList$ = this.getFilmList();
   }
 

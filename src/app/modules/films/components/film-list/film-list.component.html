@@ -1,23 +1,25 @@
-<mat-card *ngFor="let filmListItem of filmsList$ | async" class="film-card">
-  <mat-card-header>
-    <mat-card-title>{{ filmListItem.title }}</mat-card-title>
-    <mat-card-subtitle>
-      {{ filmListItem.release_date | date: "dd.MM.YYYY" }}
-    </mat-card-subtitle>
-    <mat-card-subtitle>
-      {{ filmListItem.producer }}
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{ filmListItem.opening_crawl }}</p>
-  </mat-card-content>
-  <mat-card-actions class="film-card__link">
-    <a
-      [routerLink]="routerLink"
-      [replaceUrl]="true"
-      [queryParams]="getEpisodeQueryParams(filmListItem)"
-    >
-      <button mat-button>About film</button>
-    </a>
-  </mat-card-actions>
-</mat-card>
+<div [appSpinner]="spinner" class="film-list__container">
+  <mat-card *ngFor="let filmListItem of filmsList$ | async" class="film-card">
+    <mat-card-header>
+      <mat-card-title>{{ filmListItem.title }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ filmListItem.release_date | date: "dd.MM.YYYY" }}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        {{ filmListItem.producer }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ filmListItem.opening_crawl }}</p>
+    </mat-card-content>
+    <mat-card-actions class="film-card__link">
+      <a
+        [routerLink]="routerLink"
+        [replaceUrl]="true"
+        [queryParams]="getEpisodeQueryParams(filmListItem)"
+      >
+        <button mat-button>About film</button>
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</div>

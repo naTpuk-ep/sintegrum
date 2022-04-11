@@ -38,6 +38,7 @@ export class EpisodeComponent implements OnInit {
   getEpisodeSubDataMethods: IGetDataFromEpisodeMethods;
   episodeTabsData!: IEpisodeTabData<IPlanet[] | IStarship[] | ICharacter[]>[];
   selectedIndex: number = 0;
+  spinner = true;
   constructor(
     public filmsHttpService: FilmsHttpService,
     private activatedRoute: ActivatedRoute,
@@ -51,6 +52,7 @@ export class EpisodeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner = true;
     this.getEpisodeData();
     this.getTabsData();
   }
@@ -66,6 +68,7 @@ export class EpisodeComponent implements OnInit {
     );
     this.episode$.subscribe((episode) => {
       this.episode = episode;
+      this.spinner = false;
       this.cdRef.detectChanges();
     });
   }

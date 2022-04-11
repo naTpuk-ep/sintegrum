@@ -16,9 +16,11 @@ export interface IEpisodeParams extends Params {
 export class FilmListComponent implements OnInit {
   filmsList$!: Observable<Readonly<IFilmListItem[]>>;
   routerLink = '/content/films/episode';
+  spinner!: boolean;
   constructor(private filmsHttpService: FilmsHttpService) {}
 
   ngOnInit(): void {
+    this.spinner = true;
     this.getFilmList();
   }
 
@@ -30,5 +32,8 @@ export class FilmListComponent implements OnInit {
 
   private getFilmList() {
     this.filmsList$ = this.filmsHttpService.filmList$;
+    this.filmsList$.subscribe(() => {
+      this.spinner = false;
+    });
   }
 }

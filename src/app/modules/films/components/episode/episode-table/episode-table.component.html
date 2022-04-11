@@ -1,4 +1,4 @@
-<table mat-table #sortTable matSort [dataSource]="dataSource">
+<table [appSpinner]="spinner" mat-table #sortTable matSort [dataSource]="dataSource">
   <ng-container *ngFor="let column of data.columns" [matColumnDef]="column">
     <ng-container *ngIf="column === 'name'; else thWithoutSort">
       <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ formatHeader(column) }}</th>

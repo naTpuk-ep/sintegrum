@@ -30,6 +30,7 @@ export class EpisodeTableComponent implements OnInit {
   @Input() data!: IEpisodeTabData;
   @ViewChild(MatSort) tableSort!: MatSort;
   dataSource!: MatTableDataSource<any>;
+  spinner!: boolean;
   constructor(
     private datePipe: DatePipe,
     public dialog: MatDialog,
@@ -37,7 +38,9 @@ export class EpisodeTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.spinner = true;
     this.data.content$.subscribe((content) => {
+      this.spinner = false;
       this.dataSource = new MatTableDataSource(content);
       this.dataSource.sort = this.tableSort;
       this.cdRef.detectChanges();

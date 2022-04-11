@@ -8,7 +8,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
-import { SpinnerService } from './services/spinner/spinner.service';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { LayoutComponent } from './layout.component';
@@ -37,7 +36,6 @@ import { SideNavService } from './services/sidenav/side-nav.service';
       useClass: JwtInterceptor,
       multi: true,
     },
-    SpinnerService,
     SideNavService,
   ],
 })
