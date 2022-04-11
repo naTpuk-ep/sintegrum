@@ -47,6 +47,14 @@ export class EpisodeDialogComponent<T extends { name: T[keyof T] & string }> {
         key: <keyof T>key.replace(/_/g, ' '),
         value,
       }))
-      .filter(({ key, value }) => key !== 'url' && !Array.isArray(value) && key !== 'name');
+      .filter(
+        ({ key, value }) =>
+          key !== 'url' &&
+          !Array.isArray(value) &&
+          key !== 'name' &&
+          key !== 'created' &&
+          key !== 'edited' &&
+          key !== 'homeworld'
+      );
   }
 }

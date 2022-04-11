@@ -2,10 +2,16 @@
   justify-content: flex-end;
 }
 
-td {
-  padding: 0 24px;
-  &:first-letter {
-    text-transform: capitalize;
+table {
+  min-width: 500px;
+  td {
+    padding: 0 24px;
+    &:first-letter {
+      text-transform: capitalize;
+    }
   }
 }
 
+::ng-deep .mat-dialog-content {
+  overflow-x: hidden;
+}

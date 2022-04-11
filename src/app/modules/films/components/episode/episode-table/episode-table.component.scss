@@ -7,4 +7,11 @@ table {
   th:first-letter,td:first-letter {
     text-transform: uppercase;
   }
+  .table-row {
+    transition: 0.2s;
+    &:hover {
+      background-color: var(--content-background-color);
+      cursor: pointer;
+    }
+  }
 }
