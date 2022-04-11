@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 import { IEpisodeTabData } from '../episode.component';
+import { EpisodeDialogComponent } from '../episode-dialog/episode-dialog.component';
 
 export interface ITableConfig<T extends object = any> {
   header: string;
@@ -16,7 +18,7 @@ export interface ITableConfig<T extends object = any> {
 })
 export class EpisodeTableComponent {
   @Input() data!: IEpisodeTabData;
-  constructor(private datePipe: DatePipe) {}
+  constructor(private datePipe: DatePipe, public dialog: MatDialog) {}
 
   formatCellValue(value: any) {
     if (typeof value === 'number') {
@@ -37,5 +39,12 @@ export class EpisodeTableComponent {
 
   formatHeader(field: string) {
     return field.replace(/_/g, ' ');
+  }
+
+  tableRowClick(row: { name: string; [p: string]: any }) {
+    this.dialog.open(EpisodeDialogComponent, {
+      data: row,
+      disableClose: true,
+    });
   }
 }

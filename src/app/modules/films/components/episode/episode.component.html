@@ -3,7 +3,11 @@
   <p class="font-color">Release date: {{ episode.release_date | date: "dd.MM.YYYY" }}</p>
   <p class="episode-page__description font-color">{{ episode.opening_crawl }}</p>
   <hr />
-  <mat-tab-group mat-align-tabs="center" (selectedIndexChange)="selectedIndexChange($event)">
+  <mat-tab-group
+    animationDuration="0"
+    mat-align-tabs="center"
+    (selectedIndexChange)="selectedIndexChange($event)"
+  >
     <mat-tab *ngFor="let tab of episodeTabsData; let i = index" [label]="tab.label">
       <app-episode-table *ngIf="selectedIndex === i" [data]="tab"></app-episode-table>
     </mat-tab>

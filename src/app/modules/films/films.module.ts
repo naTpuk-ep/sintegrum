@@ -9,9 +9,11 @@ import { EpisodeComponent } from './components/episode/episode.component';
 import { MatTableModule } from '@angular/material/table';
 import { EpisodeTableComponent } from './components/episode/episode-table/episode-table.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { EpisodeDialogComponent } from './components/episode/episode-dialog/episode-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [FilmListComponent, EpisodeComponent, EpisodeTableComponent],
+  declarations: [FilmListComponent, EpisodeComponent, EpisodeTableComponent, EpisodeDialogComponent],
   imports: [
     CommonModule,
     FilmsRoutingModule,
@@ -19,6 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     MatTableModule,
     MatTabsModule,
+    MatDialogModule,
   ],
   providers: [FilmsHttpService],
 })

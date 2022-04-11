@@ -1,0 +1,13 @@
+<h3 class="font-color">{{ title }}</h3>
+<div mat-dialog-content>
+  <!--  <p *ngFor="let dataItem of viewData">{{ dataItem.key }}: {{ dataItem.value }}</p>-->
+  <table mat-table [dataSource]="viewData">
+    <ng-container *ngFor="let column of ['key', 'value']" [matColumnDef]="column">
+      <td mat-cell *matCellDef="let element">{{ formatCellValue(element[column]) }}</td>
+    </ng-container>
+    <tr mat-row *matRowDef="let row; columns: ['key', 'value']"></tr>
+  </table>
+</div>
+<div class="dialog-actions" mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>
