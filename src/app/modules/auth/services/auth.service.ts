@@ -6,11 +6,6 @@ import { LocalStorageTokenService } from './local-starage-token/local-storage-to
 import { JwtCodecService } from './jwt-codec/jwt-codec.service';
 import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 
-export type TAuthFormValue = {
-  name: string;
-  password: string;
-};
-
 export type TUserPermissions = 'delete' | 'edit' | 'read';
 
 export type TTokenPayload = {
@@ -18,6 +13,33 @@ export type TTokenPayload = {
   name: string;
   permissions?: TUserPermissions[];
 };
+
+// eslint-disable-next-line no-shadow
+export enum EAuthRoles {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+export interface IUserRole {
+  role: EAuthRoles;
+  permissions?: TUserPermissions[];
+}
+
+export type TAuthFormValue = {
+  name: string;
+  password: string;
+  role: IUserRole;
+};
+
+export const appUserRoles: IUserRole[] = [
+  {
+    role: EAuthRoles.USER,
+    permissions: ['read'],
+  },
+  {
+    role: EAuthRoles.ADMIN,
+    permissions: ['delete', 'read', 'edit'],
+  },
+];
 
 @Injectable()
 export class AuthService {
@@ -37,6 +59,7 @@ export class AuthService {
       const payload = this.jwtCodecService.parsePayload(token);
       if (this.isExpTimeCorrect(payload.exp)) {
         this.payload$.next(payload);
+        console.log(payload);
         return true;
       }
       this.errorHandlerService.error$$.next(new Error(this.tokenExpErrorMessage));
@@ -73,10 +96,11 @@ export class AuthService {
     return time + this.expTime > Date.now();
   }
 
-  private createPayload({ name }: TAuthFormValue): TTokenPayload {
+  private createPayload(formValue: TAuthFormValue): TTokenPayload {
     return {
       exp: Date.now(),
-      name,
+      name: formValue.name,
+      permissions: formValue.role.permissions,
     };
   }
 }

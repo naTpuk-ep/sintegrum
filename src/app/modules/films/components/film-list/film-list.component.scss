@@ -18,3 +18,26 @@
   }
 }
 
+.permission-actions-icons {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  a {
+    margin-left: auto;
+  }
+}
+
+.mat-icon {
+  &.delete {
+    color: var(--bs-red);
+  }
+  &.edit {
+    color: var(--bs-warning);
+  }
+}

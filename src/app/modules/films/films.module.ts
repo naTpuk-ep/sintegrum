@@ -13,6 +13,7 @@ import { EpisodeComponent } from './components/episode/episode.component';
 import { EpisodeTableComponent } from './components/episode/episode-table/episode-table.component';
 import { EpisodeDialogComponent } from './components/episode/episode-dialog/episode-dialog.component';
 import { SpinnerDirective } from '../layout/directives/spinner.directive';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SpinnerDirective } from '../layout/directives/spinner.directive';
     MatTabsModule,
     MatDialogModule,
     MatSortModule,
+    MatIconModule,
   ],
   providers: [FilmsHttpService],
 })

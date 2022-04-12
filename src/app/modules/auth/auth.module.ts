@@ -11,6 +11,7 @@ import { AuthGuard } from './services/auth-guard/auth.guard';
 import { AuthService } from './services/auth.service';
 import { JwtCodecService } from './services/jwt-codec/jwt-codec.service';
 import { LocalStorageTokenService } from './services/local-starage-token/local-storage-token.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AuthComponent],
@@ -22,6 +23,7 @@ import { LocalStorageTokenService } from './services/local-starage-token/local-s
     ReactiveFormsModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatSelectModule,
   ],
   exports: [AuthComponent],
   providers: [AuthGuard, AuthService, LocalStorageTokenService, JwtCodecService],

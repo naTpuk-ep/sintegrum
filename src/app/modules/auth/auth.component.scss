@@ -13,3 +13,7 @@ mat-card {
 mat-form-field {
   display: block;
 }
+
+.mat-select, .mat-option {
+  text-transform: capitalize;
+}

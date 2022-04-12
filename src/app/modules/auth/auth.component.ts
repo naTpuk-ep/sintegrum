@@ -6,10 +6,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fromEvent } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { AuthService, TAuthFormValue } from './services/auth.service';
+import { filter, map, tap } from 'rxjs/operators';
+import { appUserRoles, AuthService, IUserRole, TAuthFormValue } from './services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -19,6 +19,7 @@ import { AuthService, TAuthFormValue } from './services/auth.service';
 })
 export class AuthComponent implements OnInit, AfterViewInit {
   @ViewChild('authForm') authFormRef!: ElementRef<HTMLFormElement>;
+  userRoles: IUserRole[] = appUserRoles;
   authFormGroup!: FormGroup;
   private fb = new FormBuilder();
   constructor(private authService: AuthService) {}
@@ -29,14 +30,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.observeLoginSubmit();
-  }
-
-  private observeLoginSubmit() {
-    const loginSubmit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
-      filter(() => this.authFormGroup.valid),
-      map(() => this.authFormValue)
-    );
-    this.authService.loginSubscribe(loginSubmit$);
   }
 
   get nameError(): string {
@@ -55,6 +48,21 @@ export class AuthComponent implements OnInit, AfterViewInit {
       : '';
   }
 
+  selectCompareFunction(a: IUserRole, b: IUserRole) {
+    return a.role === b.role;
+  }
+
+  private observeLoginSubmit() {
+    const loginSubmit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
+      tap(() => {
+        console.log(this.authFormValue);
+      }),
+      filter(() => this.authFormGroup.valid),
+      map(() => this.authFormValue)
+    );
+    this.authService.loginSubscribe(loginSubmit$);
+  }
+
   private get authFormValue() {
     return this.authFormGroup.value as TAuthFormValue;
   }
@@ -63,6 +71,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     this.authFormGroup = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
+      role: [this.userRoles[0], [Validators.required]],
     });
   }
 }

@@ -13,6 +13,11 @@
       <p>{{ filmListItem.opening_crawl }}</p>
     </mat-card-content>
     <mat-card-actions class="film-card__link">
+      <div class="permission-actions-icons" *ngIf="userActionPermissions?.length">
+        <mat-icon *ngFor="let permission of userActionPermissions" [class]="permission">
+          {{ permission }}
+        </mat-icon>
+      </div>
       <a
         [routerLink]="routerLink"
         [replaceUrl]="true"
