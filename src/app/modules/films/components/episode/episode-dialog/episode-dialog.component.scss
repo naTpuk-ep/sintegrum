@@ -4,14 +4,25 @@
 
 table {
   min-width: 500px;
+  white-space: nowrap;
   td {
-    padding: 0 24px;
     &:first-letter {
       text-transform: capitalize;
     }
   }
 }
 
+td.mat-cell, th.mat-header-cell {
+  padding: 8px;
+}
+
+
 ::ng-deep .mat-dialog-content {
-  overflow-x: hidden;
+  overflow-x: auto;
+}
+
+@media (max-width: 599px) {
+  table {
+    min-width: fit-content;
+  }
 }

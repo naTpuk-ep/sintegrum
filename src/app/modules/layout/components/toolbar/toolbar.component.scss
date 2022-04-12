@@ -11,3 +11,9 @@
 .menu-button {
   margin-right: 1rem;
 }
+
+.login-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 16px;
+}

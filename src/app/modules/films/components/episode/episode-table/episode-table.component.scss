@@ -2,10 +2,11 @@
   display: flex;
   justify-content: center;
   min-height: 200px;
-  min-width: 500px;
+  min-width: fit-content;
 }
 table {
   width: 100%;
+  white-space: nowrap;
   //tr {
   //  border-width: 0 1px;
   //  border-color: rgba(0,0,0,.12);
@@ -20,4 +21,8 @@ table {
       cursor: pointer;
     }
   }
+}
+
+td.mat-cell, th.mat-header-cell {
+  padding: 8px;
 }

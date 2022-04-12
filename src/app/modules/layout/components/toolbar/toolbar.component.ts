@@ -16,15 +16,10 @@ import { SideNavService } from '../../services/sidenav/side-nav.service';
   styleUrls: ['./toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToolbarComponent implements OnInit, AfterViewInit {
+export class ToolbarComponent implements AfterViewInit {
   @ViewChild('logOutBtn') logOutBtnRef!: MatButton;
   @ViewChild('menuToggleBtn') menuToggleBtn!: MatButton;
-  userName!: string;
-  constructor(private authService: AuthService, private sideNavService: SideNavService) {}
-
-  ngOnInit() {
-    this.userName = this.authService.payload.name;
-  }
+  constructor(private sideNavService: SideNavService, public authService: AuthService) {}
 
   ngAfterViewInit() {
     this.observeLogout();

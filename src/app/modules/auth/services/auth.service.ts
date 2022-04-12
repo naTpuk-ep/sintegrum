@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LocalStorageTokenService } from './local-starage-token/local-storage-token.service';
@@ -21,9 +21,9 @@ export type TTokenPayload = {
 
 @Injectable()
 export class AuthService {
-  payload!: TTokenPayload;
-  tokenExpErrorMessage = 'Token has expired';
-  private expTime = 36000000;
+  payload$ = new ReplaySubject<TTokenPayload>();
+  private tokenExpErrorMessage = 'Token has expired';
+  private expTime = 900000;
   constructor(
     private localStorageTokenService: LocalStorageTokenService,
     private jwtCodecService: JwtCodecService,
@@ -36,12 +36,12 @@ export class AuthService {
     if (token) {
       const payload = this.jwtCodecService.parsePayload(token);
       if (this.isExpTimeCorrect(payload.exp)) {
-        this.payload = payload;
+        this.payload$.next(payload);
         return true;
       }
       this.errorHandlerService.error$$.next(new Error(this.tokenExpErrorMessage));
     }
-    console.log('isAuth');
+    this.payload$.next();
     this.logout();
     return false;
   }
