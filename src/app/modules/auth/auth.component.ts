@@ -10,6 +10,7 @@ import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@ang
 import { fromEvent } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { appUserRoles, AuthService, IUserRole, TAuthFormValue } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -22,10 +23,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
   userRoles: IUserRole[] = appUserRoles;
   authFormGroup!: FormGroup;
   private fb = new FormBuilder();
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.resetLoginStatus();
+    if (this.authService.isAuthorized()) {
+      this.router.navigate(['']);
+    }
     this.initAuthFormGroup();
   }
   ngAfterViewInit() {

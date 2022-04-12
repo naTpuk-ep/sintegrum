@@ -44,6 +44,7 @@ export const appUserRoles: IUserRole[] = [
 @Injectable()
 export class AuthService {
   payload$ = new ReplaySubject<TTokenPayload>();
+  logoutTrigger$ = new Subject();
   private tokenExpErrorMessage = 'Token has expired';
   private expTime = 900000;
   constructor(
@@ -84,11 +85,9 @@ export class AuthService {
   }
 
   logout() {
-    this.router.navigate(['auth']);
-  }
-
-  resetLoginStatus() {
     this.localStorageTokenService.remove();
+    this.logoutTrigger$.next();
+    this.router.navigate(['auth']);
   }
 
   private isExpTimeCorrect(time: number) {

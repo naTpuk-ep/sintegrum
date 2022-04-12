@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { SwapiHttpService } from '../../layout/services/swapi-http/swapi-http.service';
 import { ErrorHandlerService } from '../../error-handler/error-handler.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 export interface IFilmListItem {
   episode_id: number;
@@ -101,10 +102,11 @@ export class FilmsHttpService extends SwapiHttpService {
   filmList$!: Observable<Readonly<IFilmListItem[]>>;
   constructor(
     protected httpClient: HttpClient,
+    protected authService: AuthService,
     protected errorHandlerService: ErrorHandlerService,
     protected router: Router
   ) {
-    super(httpClient, errorHandlerService, router);
+    super(httpClient, authService, errorHandlerService, router);
     this.filmList$ = this.getFilmList();
   }
 
