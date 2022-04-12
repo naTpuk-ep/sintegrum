@@ -54,9 +54,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   private observeLoginSubmit() {
     const loginSubmit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
-      tap(() => {
-        console.log(this.authFormValue);
-      }),
       filter(() => this.authFormGroup.valid),
       map(() => this.authFormValue)
     );

@@ -59,7 +59,6 @@ export class AuthService {
       const payload = this.jwtCodecService.parsePayload(token);
       if (this.isExpTimeCorrect(payload.exp)) {
         this.payload$.next(payload);
-        console.log(payload);
         return true;
       }
       this.errorHandlerService.error$$.next(new Error(this.tokenExpErrorMessage));
