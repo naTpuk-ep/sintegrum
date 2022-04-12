@@ -1,10 +1,20 @@
-<app-toolbar class="mat-elevation-z6"></app-toolbar>
-<div class="drawer-container">
-  <app-side-nav></app-side-nav>
-  <div class="content-container">
-    <!--    <app-spinner *ngIf="spinner"></app-spinner>-->
-    <div class="container">
-      <router-outlet></router-outlet>
+<mat-toolbar class="mat-elevation-z6" color="primary">
+  <app-toolbar></app-toolbar>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav
+    mode="side"
+    class="side-nav-container"
+    [opened]="this.sideNavService.toggler$ | async"
+    disableClose
+  >
+    <app-side-nav></app-side-nav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content-container">
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-  </div>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

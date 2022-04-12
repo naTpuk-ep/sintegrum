@@ -14,3 +14,16 @@
   background-color: var(--content-background-color);
   padding: 32px 0;
 }
+
+.mat-toolbar {
+  position: sticky;
+  z-index: 2;
+}
+
+.mat-drawer {
+  min-width: 260px;
+}
+
+.mat-sidenav-container {
+  height: calc(100% - 64px);
+}

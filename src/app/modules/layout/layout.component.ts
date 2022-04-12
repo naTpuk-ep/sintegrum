@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
+import { SideNavService } from './services/sidenav/side-nav.service';
 
 @Component({
   selector: 'app-layout',
@@ -6,4 +15,22 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent {}
+export class LayoutComponent implements AfterViewInit {
+  @ViewChild(MatSidenav) matSideNav!: MatSidenav;
+  constructor(
+    public sideNavService: SideNavService,
+    private breakpointObserver: BreakpointObserver,
+    private cdRef: ChangeDetectorRef
+  ) {}
+
+  ngAfterViewInit() {
+    this.breakpointObserver.observe(['(max-width: 991px)']).subscribe((value) => {
+      if (value.matches) {
+        this.matSideNav.mode = 'over';
+      } else {
+        this.matSideNav.mode = 'side';
+      }
+      this.cdRef.detectChanges();
+    });
+  }
+}

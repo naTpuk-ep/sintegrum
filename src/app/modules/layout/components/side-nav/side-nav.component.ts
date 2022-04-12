@@ -7,6 +7,4 @@ import { SideNavService } from '../../services/sidenav/side-nav.service';
   styleUrls: ['./side-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SideNavComponent {
-  constructor(public sideNavService: SideNavService) {}
-}
+export class SideNavComponent {}
