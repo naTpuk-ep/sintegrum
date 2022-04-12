@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
@@ -16,7 +9,7 @@ import { DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe],
 })
-export class EpisodeDialogComponent<T extends { name: T[keyof T] & string }> {
+export class EpisodeDialogComponent<T extends { name: T[keyof T] & string } = any> {
   viewData: { key: keyof T; value: T[keyof T] }[] = [];
   title: string;
   constructor(@Inject(MAT_DIALOG_DATA) private inputData: T, private datePipe: DatePipe) {

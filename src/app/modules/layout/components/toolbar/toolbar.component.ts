@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
