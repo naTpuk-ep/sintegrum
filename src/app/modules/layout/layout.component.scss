@@ -1,10 +1,10 @@
-.drawer-container {
-  height: calc(100% - 64px);
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-
-}
+//.drawer-container {
+//  height: calc(100% - 64px);
+//  width: 100%;
+//  overflow: hidden;
+//  display: flex;
+//
+//}
 
 .content-container {
   position: relative;
@@ -26,4 +26,10 @@
 
 .mat-sidenav-container {
   height: calc(100% - 64px);
+}
+
+@media (max-width: 599px) {
+  .mat-sidenav-container {
+    height: calc(100% - 56px);
+  }
 }

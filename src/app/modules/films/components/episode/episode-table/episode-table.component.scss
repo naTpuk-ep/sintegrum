@@ -2,13 +2,14 @@
   display: flex;
   justify-content: center;
   min-height: 200px;
+  min-width: 500px;
 }
 table {
   width: 100%;
-  tr {
-    border-width: 0 1px;
-    border-color: rgba(0,0,0,.12);
-  }
+  //tr {
+  //  border-width: 0 1px;
+  //  border-color: rgba(0,0,0,.12);
+  //}
   th,td {
     text-transform: capitalize;
   }

@@ -24,7 +24,10 @@ export class LayoutComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.breakpointObserver.observe(['(max-width: 991px)']).subscribe((value) => {
+    this.matSideNav._animationEnd.subscribe(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    this.breakpointObserver.observe(['(max-width: 1199px)']).subscribe((value) => {
       if (value.matches) {
         this.matSideNav.mode = 'over';
       } else {
