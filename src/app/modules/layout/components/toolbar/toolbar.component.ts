@@ -2,11 +2,12 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
 import { SideNavService } from '../../services/sidenav/side-nav.service';
 
@@ -16,14 +17,20 @@ import { SideNavService } from '../../services/sidenav/side-nav.service';
   styleUrls: ['./toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToolbarComponent implements AfterViewInit {
+export class ToolbarComponent implements AfterViewInit, OnDestroy {
   @ViewChild('logOutBtn') logOutBtnRef!: MatButton;
   @ViewChild('menuToggleBtn') menuToggleBtn!: MatButton;
+  private subscriptions: Subscription[] = [];
   constructor(private sideNavService: SideNavService, public authService: AuthService) {}
 
   ngAfterViewInit() {
     this.observeLogout();
     this.observeMenuExpandToggle();
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 
   private observeMenuExpandToggle() {
@@ -31,8 +38,10 @@ export class ToolbarComponent implements AfterViewInit {
   }
 
   private observeLogout() {
-    fromEvent(this.logOutBtnRef._getHostElement(), 'click').subscribe(() => {
-      this.authService.logout();
-    });
+    this.subscriptions.push(
+      fromEvent(this.logOutBtnRef._getHostElement(), 'click').subscribe(() => {
+        this.authService.logout();
+      })
+    );
   }
 }
