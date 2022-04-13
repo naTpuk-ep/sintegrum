@@ -17,7 +17,7 @@ import {
 
 @Injectable()
 export class FilmsHttpService extends SwapiHttpService {
-  filmList$!: Observable<Readonly<IFilmListItem[]>>;
+  filmList$!: Observable<Readonly<IFilmListItem>[]>;
   constructor(
     protected httpClient: HttpClient,
     protected authService: AuthService,
@@ -44,7 +44,7 @@ export class FilmsHttpService extends SwapiHttpService {
     return this.get<Readonly<ICharacter>>(url);
   }
 
-  getFilmList(): Observable<Readonly<IFilmListItem[]>> {
+  getFilmList(): Observable<Readonly<IFilmListItem>[]> {
     return this.get<IGetFilmsResponse>(`${this.baseUrl}/films`).pipe(
       map((response: IGetFilmsResponse) =>
         response.results.sort((a, b) => +a.episode_id - +b.episode_id)
