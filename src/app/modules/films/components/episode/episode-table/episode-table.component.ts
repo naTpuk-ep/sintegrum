@@ -32,7 +32,7 @@ export class EpisodeTableComponent implements OnInit {
   spinner!: boolean;
   constructor(
     private datePipe: DatePipe,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private cdRef: ChangeDetectorRef
   ) {}
 
@@ -46,21 +46,11 @@ export class EpisodeTableComponent implements OnInit {
     });
   }
 
-  formatCellValue(value: any) {
-    if (typeof value === 'number') {
-      return value;
-    }
-    if (this.isNumber(value)) {
-      return +value;
-    }
-    if (!Number.isNaN(Date.parse(value))) {
-      return this.datePipe.transform(value, 'dd.MM.YYYY');
+  formatCellValue(value: string) {
+    if (value.match(/^\d{4}-\d{2}-\d{2}/)) {
+      return this.datePipe.transform(value, 'HH.MM.YYYY');
     }
     return value;
-  }
-
-  isNumber(value: any) {
-    return !Number.isNaN(+value);
   }
 
   formatHeader(field: string) {

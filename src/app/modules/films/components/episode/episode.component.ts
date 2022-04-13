@@ -7,13 +7,13 @@ import { IEpisodeParams } from '../film-list/film-list.component';
 import { tableColumns } from './episode-table.config';
 import { ICharacter, IEpisode, IPlanet, IStarship } from '../../services/films-http.interfaces';
 
-export interface IGetDataFromEpisodeMethods {
+export interface IEpisodeGetDataMethods {
   starships: (url: string) => Observable<Readonly<IStarship>>;
   planets: (url: string) => Observable<Readonly<IPlanet>>;
   characters: (url: string) => Observable<Readonly<ICharacter>>;
 }
 
-export type TTabKey = keyof IGetDataFromEpisodeMethods;
+export type TTabKey = keyof IEpisodeGetDataMethods;
 
 export interface IEpisodeTabData<T = any> {
   label: string;
@@ -30,16 +30,16 @@ export interface IEpisodeTabData<T = any> {
 export class EpisodeComponent implements OnInit {
   episode$!: Observable<Readonly<IEpisode>>;
   episode!: Readonly<IEpisode>;
-  getEpisodeSubDataMethods: IGetDataFromEpisodeMethods;
+  episodeTabsGetDataMethods: IEpisodeGetDataMethods;
   episodeTabsData!: IEpisodeTabData<IPlanet[] | IStarship[] | ICharacter[]>[];
   selectedIndex: number = 0;
-  spinner = true;
+  spinner!: boolean;
   constructor(
-    public filmsHttpService: FilmsHttpService,
+    private filmsHttpService: FilmsHttpService,
     private activatedRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef
   ) {
-    this.getEpisodeSubDataMethods = {
+    this.episodeTabsGetDataMethods = {
       starships: this.filmsHttpService.getStarship.bind(this.filmsHttpService),
       planets: this.filmsHttpService.getPlanet.bind(this.filmsHttpService),
       characters: this.filmsHttpService.getCharacter.bind(this.filmsHttpService),
@@ -68,19 +68,19 @@ export class EpisodeComponent implements OnInit {
     });
   }
 
-  private getEpisodeContent(key: TTabKey, method: IGetDataFromEpisodeMethods[TTabKey]) {
+  private getEpisodeTabContent(key: TTabKey, method: IEpisodeGetDataMethods[TTabKey]) {
     return this.episode$.pipe(
-      map((episode) => episode[<keyof IGetDataFromEpisodeMethods>key].map((url) => method(url))),
+      map((episode) => episode[<keyof IEpisodeGetDataMethods>key].map((url) => method(url))),
       switchMap((itemObservableArray) => <Observable<any[]>>forkJoin(itemObservableArray)),
       shareReplay()
     );
   }
 
   private getTabsData() {
-    this.episodeTabsData = Object.entries(this.getEpisodeSubDataMethods).map(([key, method]) => ({
+    this.episodeTabsData = Object.entries(this.episodeTabsGetDataMethods).map(([key, method]) => ({
       label: key,
       columns: tableColumns[<TTabKey>key],
-      content$: this.getEpisodeContent(<TTabKey>key, method),
+      content$: this.getEpisodeTabContent(<TTabKey>key, method),
     }));
   }
 }

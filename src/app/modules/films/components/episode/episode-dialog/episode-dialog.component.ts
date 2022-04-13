@@ -17,37 +17,19 @@ export class EpisodeDialogComponent<T extends { name: T[keyof T] & string } = an
     this.prepareViewData();
   }
 
-  formatCellValue(value: any) {
-    if (typeof value === 'number') {
-      return value;
-    }
-    if (this.isNumber(value)) {
-      return +value;
-    }
-    if (!Number.isNaN(Date.parse(value))) {
-      return this.datePipe.transform(value, 'dd.MM.YYYY');
+  formatCellValue(value: string) {
+    if (value.match(/^\d{4}-\d{2}-\d{2}/)) {
+      return this.datePipe.transform(value, 'HH.MM.YYYY');
     }
     return value;
-  }
-
-  isNumber(value: any) {
-    return !Number.isNaN(+value);
   }
 
   private prepareViewData() {
     this.viewData = Object.entries(this.inputData)
       .map(([key, value]) => ({
-        key: <keyof T>key.replace(/_/g, ' '),
+        key: <keyof T & string>key.replace(/_/g, ' '),
         value,
       }))
-      .filter(
-        ({ key, value }) =>
-          key !== 'url' &&
-          !Array.isArray(value) &&
-          key !== 'name' &&
-          key !== 'created' &&
-          key !== 'edited' &&
-          key !== 'homeworld'
-      );
+      .filter(({ key, value }) => !Array.isArray(value) && key !== 'name' && !value.match(/^http/));
   }
 }
