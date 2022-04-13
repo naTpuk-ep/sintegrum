@@ -2,15 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
-import {
-  FilmsHttpService,
-  ICharacter,
-  IEpisode,
-  IPlanet,
-  IStarship,
-} from '../../services/films-http.service';
+import { FilmsHttpService } from '../../services/films-http.service';
 import { IEpisodeParams } from '../film-list/film-list.component';
 import { tableColumns } from './episode-table.config';
+import { ICharacter, IEpisode, IPlanet, IStarship } from '../../services/films-http.interfaces';
 
 export interface IGetDataFromEpisodeMethods {
   starships: (url: string) => Observable<Readonly<IStarship>>;

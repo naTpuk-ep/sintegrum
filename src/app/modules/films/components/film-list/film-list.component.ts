@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Params } from '@angular/router';
-import { FilmsHttpService, IFilmListItem } from '../../services/films-http.service';
+import { FilmsHttpService } from '../../services/films-http.service';
 import { AuthService, TUserPermissions } from '../../../auth/services/auth.service';
+import { IFilmListItem } from '../../services/films-http.interfaces';
 
 export interface IEpisodeParams extends Params {
   film: number;
