@@ -16,15 +16,6 @@ td.mat-cell, th.mat-header-cell {
   padding: 8px;
 }
 
-
-::ng-deep .mat-dialog-content {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 @media (max-width: 599px) {
   table {
     min-width: fit-content;
