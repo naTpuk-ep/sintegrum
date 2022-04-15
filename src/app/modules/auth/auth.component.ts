@@ -51,10 +51,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
       : '';
   }
 
-  selectCompareFunction(a: IUserRole, b: IUserRole) {
-    return a.role === b.role;
-  }
-
   private observeLoginSubmit() {
     const loginSubmit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
       filter(() => this.authFormGroup.valid),
