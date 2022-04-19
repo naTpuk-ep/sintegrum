@@ -1,16 +1,8 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { fromEvent } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
-import { appUserRoles, AuthService, IUserRole, TAuthFormValue } from './services/auth.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { appUserRoles, AuthService, IUserRole } from './services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -18,8 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthComponent implements OnInit, AfterViewInit {
-  @ViewChild('authForm') authFormRef!: ElementRef<HTMLFormElement>;
+export class AuthComponent implements OnInit {
   userRoles: IUserRole[] = appUserRoles;
   authFormGroup!: FormGroup;
   private fb = new FormBuilder();
@@ -30,8 +21,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
       this.router.navigate(['']);
     }
     this.initAuthFormGroup();
-  }
-  ngAfterViewInit() {
     this.observeLoginSubmit();
   }
 
@@ -52,22 +41,22 @@ export class AuthComponent implements OnInit, AfterViewInit {
   }
 
   private observeLoginSubmit() {
-    const loginSubmit$ = fromEvent(this.authFormRef.nativeElement, 'submit').pipe(
-      filter(() => this.authFormGroup.valid),
-      map(() => this.authFormValue)
+    const loginFormValue$ = this.authFormGroup.valueChanges.pipe(
+      filter(() => this.authFormGroup.valid)
     );
-    this.authService.loginSubscribe(loginSubmit$);
-  }
-
-  private get authFormValue() {
-    return this.authFormGroup.value as TAuthFormValue;
+    this.authService.login(loginFormValue$);
   }
 
   private initAuthFormGroup() {
-    this.authFormGroup = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(5)]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
-      role: [this.userRoles[0], [Validators.required]],
-    });
+    this.authFormGroup = this.fb.group(
+      {
+        name: ['', [Validators.required, Validators.minLength(5)]],
+        password: ['', [Validators.required, Validators.minLength(5)]],
+        role: [this.userRoles[0], [Validators.required]],
+      },
+      {
+        updateOn: 'submit',
+      }
+    );
   }
 }

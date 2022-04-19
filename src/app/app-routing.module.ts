@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './modules/auth/services/auth-guard/auth.guard';
 import { AuthComponent } from './modules/auth/auth.component';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
@@ -21,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

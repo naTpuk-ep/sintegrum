@@ -69,11 +69,11 @@ export class AuthService {
     return false;
   }
 
-  loginSubscribe(authFormValue$: Observable<TAuthFormValue>) {
+  login(authFormValue$: Observable<TAuthFormValue>) {
     authFormValue$
       .pipe(
-        switchMap((formValue) => {
-          const payload = this.createPayload(formValue);
+        switchMap((authFormValue) => {
+          const payload = this.createPayload(authFormValue);
           const token = this.jwtCodecService.encode(payload);
           return of(token);
         })
@@ -94,11 +94,11 @@ export class AuthService {
     return time + this.expTime > Date.now();
   }
 
-  private createPayload(formValue: TAuthFormValue): TTokenPayload {
+  private createPayload(authFormValue: TAuthFormValue): TTokenPayload {
     return {
       exp: Date.now(),
-      name: formValue.name,
-      permissions: formValue.role.permissions,
+      name: authFormValue.name,
+      permissions: authFormValue.role.permissions,
     };
   }
 }

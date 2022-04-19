@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { LocalStorageTokenService } from './local-storage-token.service';
 
-describe('LocalStorageService', () => {
+describe('LocalStorageTokenService', () => {
   let service: LocalStorageTokenService;
 
   beforeEach(() => {
